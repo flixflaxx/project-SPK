@@ -1,0 +1,251 @@
+@import '@fontsource-variable/manrope';
+@import '@fontsource-variable/dm-sans';
+
+:root {
+  /* Brand Tokens - SYSTEM_DESIGN §2 */
+  --color-green-950: #09291f;
+  --color-green-900: #0d382e;
+  --color-green-700: #16765b;
+  --color-green-600: #1b8a6a;
+  --color-green-500: #20b47c;
+  --color-lime: #b5f56a;
+  --color-lime-text: #09291f;
+
+  /* Neutrals */
+  --color-surface: #ffffff;
+  --color-surface-hover: #f9fbf9;
+  --color-surface-muted: #f0f4f1;
+  --color-bg: #f6f8f7;
+  --color-line: #e8eeeb;
+  --color-line-dark: #d2ddd6;
+
+  /* Typography Colors */
+  --color-text-main: #13221b;
+  --color-text-muted: #576b61;
+  --color-text-subtle: #879b91;
+  --color-text-inverse: #ffffff;
+
+  /* Feedback */
+  --color-danger: #e25454;
+  --color-danger-bg: #fdf2f2;
+  --color-danger-border: #f8caca;
+  --color-warning: #d79b32;
+  --color-warning-bg: #fef8ee;
+  --color-warning-border: #fae4be;
+  --color-success: #16765b;
+  --color-success-bg: #edf8f3;
+  --color-success-border: #bfe5d3;
+  --color-info: #2b7cb3;
+  --color-info-bg: #edf5fa;
+  --color-info-border: #c4dff0;
+
+  /* Typography */
+  --font-heading: 'Manrope Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'DM Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(9, 41, 31, 0.05);
+  --shadow-md: 0 4px 12px rgba(9, 41, 31, 0.07);
+  --shadow-lg: 0 10px 25px rgba(9, 41, 31, 0.1);
+  --shadow-modal: 0 20px 40px rgba(9, 41, 31, 0.16);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-green-950);
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: var(--color-green-700);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-dark);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-subtle);
+}
+
+/* Pulse animation for active calculated status */
+@keyframes pulse-green-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(32, 180, 124, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(32, 180, 124, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(32, 180, 124, 0);
+  }
+}
+
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-green-500, #20b47c);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-green-ring 1.8s infinite;
+  flex-shrink: 0;
+}
+
+/* Micro-interaction on Calculate SAW Button */
+.btn-calc-glow {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+}
+
+.btn-calc-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 118, 91, 0.4), 0 0 14px rgba(181, 245, 106, 0.3) !important;
+}
+
+.btn-calc-glow:hover .calc-icon-spin {
+  transform: rotate(-14deg) scale(1.15);
+}
+
+.btn-calc-glow:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(22, 118, 91, 0.25) !important;
+}
+
+.calc-icon-spin {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+}
+
+/* Timeline hover interaction */
+.timeline-item-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.timeline-item-card:hover {
+  transform: translateX(3px);
+  border-color: var(--color-green-600) !important;
+}
+
+/* Ranking item hover interaction */
+.ranking-item-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ranking-item-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Global Action Button with Emerald Glow */
+.btn-action-glow {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-action-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 118, 91, 0.38), 0 0 14px rgba(181, 245, 106, 0.25) !important;
+}
+
+.btn-action-glow:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(22, 118, 91, 0.2) !important;
+}
+
+.btn-action-glow:hover svg {
+  transform: scale(1.12);
+}
+
+.btn-action-glow svg {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Global Interactive Card Hover */
+.interactive-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-green-700) !important;
+}
+
+/* Page fade transition */
+@keyframes page-enter-anim {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter-content {
+  animation: page-enter-anim 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
