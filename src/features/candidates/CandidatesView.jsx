@@ -18,14 +18,15 @@ export function CandidatesView({
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.cand-stat-card'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(80),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [16, 0],
+        delay: anime.stagger(80),
+        duration: 550,
+        easing: 'easeOutBack',
       })
     }
   }, [])
@@ -70,10 +71,10 @@ export function CandidatesView({
         const res = residents.find((r) => r.id === row.residentId)
         return (
           <div>
-            <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>
+            <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>
               {res?.name || row.residentId}
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)' }}>
+            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
               NIK: <code>{res?.nikMasked || '—'}</code> · {res?.addressRtRw || '—'}
             </div>
           </div>
@@ -106,7 +107,11 @@ export function CandidatesView({
       key: 'createdAt',
       label: 'Tgl Daftar',
       width: '10%',
-      render: (val) => new Date(val).toLocaleDateString('id-ID'),
+      render: (val) => (
+        <span className="clay-badge" style={{ backgroundColor: '#ffffff', fontSize: '11px', padding: '3px 9px', color: 'var(--color-text-subtle)' }}>
+          {new Date(val).toLocaleDateString('id-ID')}
+        </span>
+      ),
     },
   ]
 
@@ -119,18 +124,11 @@ export function CandidatesView({
         actions={
           <button
             type="button"
-            className="btn-action-glow"
+            className="clay-btn"
             onClick={() => setIsModalOpen(true)}
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
+              padding: '11px 22px',
               fontSize: '13px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
             }}
           >
             <Plus size={16} />
@@ -139,47 +137,44 @@ export function CandidatesView({
         }
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="cand-stat-card interactive-card"
+          className="cand-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL CALON TERDAFTAR</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              TOTAL CALON TERDAFTAR
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               {candidates.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Periode {activePeriod?.name || 'Aktif'}
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Users size={22} />
@@ -187,13 +182,10 @@ export function CandidatesView({
         </div>
 
         <div
-          className="cand-stat-card interactive-card"
+          className="cand-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -201,26 +193,26 @@ export function CandidatesView({
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TERVERIFIKASI SAH</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                TERVERIFIKASI SAH
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {verifiedCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Memenuhi syarat masuk SAW
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <CheckCircle2 size={22} />
@@ -228,37 +220,34 @@ export function CandidatesView({
         </div>
 
         <div
-          className="cand-stat-card interactive-card"
+          className="cand-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>MENUNGGU VERIFIKASI</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              MENUNGGU VERIFIKASI
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '6px', lineHeight: 1.1 }}>
               {pendingCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Dalam antrean periksa berkas
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Clock size={22} />
@@ -281,27 +270,29 @@ export function CandidatesView({
       >
         {error && (
           <div
+            className="clay-badge"
             style={{
-              backgroundColor: 'var(--color-danger-bg)',
-              color: 'var(--color-danger)',
-              padding: '10px 12px',
-              borderRadius: 'var(--radius-sm)',
+              backgroundColor: '#fee2e2',
+              color: '#dc2626',
+              padding: '10px 14px',
               fontSize: '12.5px',
-              marginBottom: '14px',
+              marginBottom: '16px',
+              width: '100%',
+              justifyContent: 'center',
             }}
           >
             {error}
           </div>
         )}
         <form onSubmit={handleRegister}>
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '8px', color: 'var(--color-green-950)' }}>
               Pilih Warga (dari Data Master Warga)
             </label>
             <select
               value={selectedResidentId}
               onChange={(e) => setSelectedResidentId(e.target.value)}
-              style={{ width: '100%', padding: '9px 12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             >
               <option value="">— Pilih Warga —</option>
               {unregisteredResidents.map((r) => (
@@ -311,30 +302,27 @@ export function CandidatesView({
               ))}
             </select>
             {unregisteredResidents.length === 0 && (
-              <span style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '4px', display: 'block' }}>
+              <span style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '6px', display: 'block' }}>
                 Semua warga telah terdaftar pada periode seleksi ini.
               </span>
             )}
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              style={{ padding: '8px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              className="clay-badge"
+              style={{ padding: '9px 18px', backgroundColor: '#ffffff', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px' }}
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={unregisteredResidents.length === 0}
-              className="btn-action-glow"
+              className="clay-btn"
               style={{
-                padding: '8px 18px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-green-700)',
-                color: '#fff',
-                fontWeight: '700',
+                padding: '9px 22px',
                 fontSize: '13px',
                 opacity: unregisteredResidents.length === 0 ? 0.6 : 1,
               }}

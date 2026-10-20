@@ -9,14 +9,15 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.rec-item-card'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(60),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [14, 0],
+        delay: anime.stagger(50),
+        duration: 500,
+        easing: 'easeOutBack',
       })
     }
   }, [calculationRun])
@@ -30,9 +31,9 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
           description="Sintesis komputasi ranking SAW, status verifikasi administrasi, dan pagu kuota program."
         />
         <Panel>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '13.5px' }}>
+          <div className="clay-item" style={{ padding: '32px', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '14px' }}>
             Jalankan perhitungan SAW terlebih dahulu untuk menghasilkan rekomendasi.
-          </p>
+          </div>
         </Panel>
       </div>
     )
@@ -52,18 +53,11 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
         actions={
           <button
             type="button"
-            className="btn-action-glow"
+            className="clay-btn"
             onClick={() => onNavigate('decisions')}
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
+              padding: '11px 22px',
               fontSize: '13px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
             }}
           >
             <span>Lanjut ke Lembar Persetujuan</span>
@@ -72,47 +66,44 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
         }
       />
 
-      {/* Top Squircle Metric Cards */}
+      {/* Top Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL REKOMENDASI</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              TOTAL REKOMENDASI
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               {recommendations.items.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Diproses dari run SAW
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <ListOrdered size={22} />
@@ -120,13 +111,10 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -134,26 +122,26 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>DALAM KUOTA PAGU</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-green-700)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+                DALAM KUOTA PAGU
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {withinQuotaCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Prioritas alokasi bantuan
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Award size={22} />
@@ -161,37 +149,34 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>CADANGAN SELEKSI</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              CADANGAN SELEKSI
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '6px', lineHeight: 1.1 }}>
               {reserveCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Daftar tunggu jika ada kuota kosong
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Clock size={22} />
@@ -200,7 +185,7 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
       </div>
 
       <Panel title={`Rekomendasi Sistem untuk Periode ${activePeriod?.name || 'Aktif'}`}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {recommendations.items.map((item) => {
             const cand = candidates.find((c) => c.id === item.candidateId)
             const res = residents.find((r) => r.id === cand?.residentId)
@@ -209,40 +194,37 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
             return (
               <div
                 key={item.candidateId}
-                className="rec-item-card interactive-card"
+                className="rec-item-card clay-item"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '14px 18px',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: 'var(--color-surface)',
-                  border: isTop ? '1.5px solid var(--color-green-600)' : '1px solid var(--color-line)',
-                  boxShadow: 'var(--shadow-sm)',
+                  padding: '16px 20px',
+                  backgroundColor: '#ffffff',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <span
+                  <div
+                    className="clay-marble"
                     style={{
-                      width: '36px',
-                      height: '36px',
-                      borderRadius: '10px',
-                      backgroundColor: item.rank ? (isTop ? 'var(--color-green-950)' : 'var(--color-green-700)') : '#e9ecef',
-                      color: item.rank ? (isTop ? 'var(--color-lime)' : '#ffffff') : '#868e96',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: '800',
+                      width: '40px',
+                      height: '40px',
+                      background: item.rank
+                        ? isTop
+                          ? 'linear-gradient(135deg, #0d382e, #07221a)'
+                          : 'linear-gradient(135deg, #1b8a6a, #16765b)'
+                        : 'linear-gradient(135deg, #94a3b8, #64748b)',
+                      color: item.rank ? (isTop ? 'var(--color-lime)' : '#ffffff') : '#ffffff',
+                      fontWeight: '900',
                       fontSize: '14px',
                       fontFamily: 'monospace',
-                      boxShadow: isTop ? '0 2px 8px rgba(9, 41, 31, 0.25)' : 'none',
                     }}
                   >
                     {item.rank ? `#${item.rank}` : '—'}
-                  </span>
+                  </div>
 
                   <div>
-                    <div style={{ fontWeight: '700', fontSize: '14.5px', color: 'var(--color-green-950)' }}>
+                    <div style={{ fontWeight: '800', fontSize: '15px', color: 'var(--color-green-950)' }}>
                       {res?.name || item.candidateId}
                     </div>
                     <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>

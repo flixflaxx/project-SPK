@@ -23,6 +23,7 @@ export function SidebarNav({ activeView, onViewChange, isOpen, onClose }) {
         style={{
           width: '260px',
           backgroundColor: 'var(--color-green-950)',
+          background: 'linear-gradient(180deg, #09291f 0%, #0d382e 100%)',
           color: 'var(--color-text-inverse)',
           display: 'flex',
           flexDirection: 'column',
@@ -30,7 +31,8 @@ export function SidebarNav({ activeView, onViewChange, isOpen, onClose }) {
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRight: 'none',
+          boxShadow: '8px 0 28px rgba(9, 41, 31, 0.22), inset -4px 0 10px rgba(0, 0, 0, 0.35), inset 2px 0 8px rgba(181, 245, 106, 0.12)',
           userSelect: 'none',
           flexShrink: 0,
         }}
@@ -47,9 +49,9 @@ export function SidebarNav({ activeView, onViewChange, isOpen, onClose }) {
         >
           <div
             style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: 'var(--radius-md)',
+              width: '40px',
+              height: '40px',
+              borderRadius: '14px',
               backgroundColor: 'var(--color-green-700)',
               display: 'flex',
               alignItems: 'center',
@@ -58,6 +60,7 @@ export function SidebarNav({ activeView, onViewChange, isOpen, onClose }) {
               color: 'var(--color-lime)',
               fontWeight: '900',
               fontFamily: 'var(--font-heading)',
+              boxShadow: '3px 5px 12px rgba(0, 0, 0, 0.3), inset 2px 2px 5px rgba(255, 255, 255, 0.35), inset -2px -2px 5px rgba(0, 0, 0, 0.25)',
             }}
           >
             SPK
@@ -127,13 +130,16 @@ export function SidebarNav({ activeView, onViewChange, isOpen, onClose }) {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '10px',
-                          padding: '8px 12px',
-                          borderRadius: 'var(--radius-sm)',
+                          padding: '9px 14px',
+                          borderRadius: '16px',
                           backgroundColor: isActive ? 'var(--color-green-700)' : 'transparent',
                           color: isActive ? '#ffffff' : '#c8ded5',
                           fontSize: '13px',
-                          fontWeight: isActive ? '600' : '500',
+                          fontWeight: isActive ? '700' : '500',
                           textAlign: 'left',
+                          boxShadow: isActive
+                            ? '3px 5px 12px rgba(0, 0, 0, 0.25), inset 2px 2px 4px rgba(255, 255, 255, 0.28), inset -2px -2px 4px rgba(0, 0, 0, 0.2)'
+                            : 'none',
                           transition: 'all var(--transition-fast)',
                         }}
                         onMouseEnter={(e) => {

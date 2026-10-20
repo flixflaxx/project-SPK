@@ -38,27 +38,24 @@ export function UsersView({ users }) {
           .toUpperCase()
 
         return (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div
+              className="clay-marble"
               style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-green-950)',
-                color: 'var(--color-lime)',
+                width: '38px',
+                height: '38px',
+                fontSize: '13px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontWeight: '800',
-                fontSize: '12px',
                 flexShrink: 0,
               }}
             >
               {initials}
             </div>
             <div>
-              <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>{val}</div>
-              <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)' }}>{row.email}</div>
+              <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>{val}</div>
+              <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{row.email}</div>
             </div>
           </div>
         )
@@ -70,14 +67,13 @@ export function UsersView({ users }) {
       width: '18%',
       render: (val) => (
         <span
+          className="clay-badge"
           style={{
-            fontWeight: '700',
-            fontSize: '12px',
-            backgroundColor: 'var(--color-surface-muted)',
-            padding: '3px 8px',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--color-line-dark)',
-            color: 'var(--color-green-950)',
+            fontWeight: '800',
+            fontSize: '11.5px',
+            backgroundColor: '#edf8f3',
+            color: 'var(--color-green-800)',
+            padding: '4px 10px',
           }}
         >
           {val}
@@ -89,18 +85,18 @@ export function UsersView({ users }) {
       label: 'Cakupan Izin (Permissions)',
       width: '38%',
       render: (perms) => (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
           {perms.map((p) => (
             <span
               key={p}
+              className="clay-badge"
               style={{
-                fontSize: '11px',
+                fontSize: '10.5px',
                 fontFamily: 'monospace',
-                backgroundColor: '#edf8f3',
-                padding: '2px 6px',
-                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface-muted)',
+                padding: '3px 8px',
                 color: 'var(--color-green-700)',
-                fontWeight: '600',
+                fontWeight: '700',
               }}
             >
               {p}
@@ -125,7 +121,7 @@ export function UsersView({ users }) {
         description="Pengelolaan akun pengguna dan hak akses sistem."
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
@@ -135,20 +131,18 @@ export function UsersView({ users }) {
         }}
       >
         <div
-          className="user-stat-card interactive-card"
+          className="user-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>PENGGUNA TERDAFTAR</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              PENGGUNA TERDAFTAR
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
               {users.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Akun</span>
             </div>
@@ -157,10 +151,10 @@ export function UsersView({ users }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
               display: 'flex',
@@ -173,13 +167,9 @@ export function UsersView({ users }) {
         </div>
 
         <div
-          className="user-stat-card interactive-card"
+          className="user-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -187,21 +177,23 @@ export function UsersView({ users }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>AKUN AKTIF SAH</span>
+              <span style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+                AKUN AKTIF SAH
+              </span>
               <span className="pulse-indicator" />
             </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
-              {activeUsersCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Aktif</span>
+              {activeUsersCount} <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--color-green-700)' }}>Aktif</span>
             </div>
             <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
               Izin otorisasi tervalidasi
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
               display: 'flex',
@@ -214,20 +206,18 @@ export function UsersView({ users }) {
         </div>
 
         <div
-          className="user-stat-card interactive-card"
+          className="user-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>PERAN OTORISASI</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              PERAN OTORISASI
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
               {distinctRoles} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Role</span>
             </div>
@@ -236,10 +226,10 @@ export function UsersView({ users }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
               display: 'flex',

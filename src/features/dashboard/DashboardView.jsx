@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react'
 import {
   Activity,
@@ -15,7 +14,6 @@ import {
 } from 'lucide-react'
 import { KpiCard } from '../../components/common/KpiCard.jsx'
 import { PageHeader } from '../../components/common/PageHeader.jsx'
-import { Panel } from '../../components/common/Panel.jsx'
 import { StatusBadge } from '../../components/common/StatusBadge.jsx'
 import { formatExact } from '@shared/domain/saw/fraction.js'
 
@@ -31,39 +29,39 @@ function getTimelineStyle(action = '') {
   if (action.includes('VERIF') || action.includes('RESIDENT')) {
     return {
       color: '#16a34a',
-      bg: '#dcfce7',
-      border: '#bbf7d0',
+      bg: 'linear-gradient(135deg, #bbf7d0, #86efac)',
+      marbleShadow: '3px 5px 12px rgba(22, 163, 74, 0.25), inset 2px 2px 5px rgba(255, 255, 255, 0.8), inset -2px -2px 5px rgba(0, 0, 0, 0.15)',
       icon: <UserCheck size={14} />,
     }
   }
   if (action.includes('CALCULATION')) {
     return {
       color: '#9333ea',
-      bg: '#f3e8ff',
-      border: '#e9d5ff',
+      bg: 'linear-gradient(135deg, #e9d5ff, #d8b4fe)',
+      marbleShadow: '3px 5px 12px rgba(147, 51, 234, 0.25), inset 2px 2px 5px rgba(255, 255, 255, 0.8), inset -2px -2px 5px rgba(0, 0, 0, 0.15)',
       icon: <Zap size={14} />,
     }
   }
   if (action.includes('PERIOD') || action.includes('QUOTA')) {
     return {
       color: '#0284c7',
-      bg: '#e0f2fe',
-      border: '#bae6fd',
+      bg: 'linear-gradient(135deg, #bae6fd, #7dd3fc)',
+      marbleShadow: '3px 5px 12px rgba(2, 132, 199, 0.25), inset 2px 2px 5px rgba(255, 255, 255, 0.8), inset -2px -2px 5px rgba(0, 0, 0, 0.15)',
       icon: <Calendar size={14} />,
     }
   }
   if (action.includes('DECISION')) {
     return {
       color: '#d97706',
-      bg: '#fef3c7',
-      border: '#fde68a',
+      bg: 'linear-gradient(135deg, #fde68a, #fcd34d)',
+      marbleShadow: '3px 5px 12px rgba(217, 119, 6, 0.25), inset 2px 2px 5px rgba(255, 255, 255, 0.8), inset -2px -2px 5px rgba(0, 0, 0, 0.15)',
       icon: <FileCheck size={14} />,
     }
   }
   return {
     color: '#0f766e',
-    bg: '#ccfbf1',
-    border: '#99f6e4',
+    bg: 'linear-gradient(135deg, #99f6e4, #5eead4)',
+    marbleShadow: '3px 5px 12px rgba(15, 118, 110, 0.25), inset 2px 2px 5px rgba(255, 255, 255, 0.8), inset -2px -2px 5px rgba(0, 0, 0, 0.15)',
     icon: <Activity size={14} />,
   }
 }
@@ -83,22 +81,22 @@ export function DashboardView({
   const quota = activePeriod?.quota ?? 0
   const topRankings = calculationRun?.results?.slice(0, 5) || []
 
-  // Initialize Anime.js animations
+  // Initialize Anime.js animations with Claymorphism easeOutBack & Elasticity
   useEffect(() => {
     const anime = typeof window !== 'undefined' ? window.anime : null
     if (!anime) return
 
-    // 1. Stagger fade-up for top statistic cards
+    // 1. Stagger bouncy entrance for Claymorphism cards
     anime({
-      targets: '.animate-card',
-      translateY: [18, 0],
+      targets: '.clay-anim-card',
+      translateY: [24, 0],
       opacity: [0, 1],
-      delay: anime.stagger(90, { start: 100 }),
-      easing: 'easeOutCubic',
-      duration: 650,
+      delay: anime.stagger(90, { start: 80 }),
+      easing: 'easeOutBack',
+      duration: 750,
     })
 
-    // 2. Number counter naik dari 0 untuk angka statistik utama
+    // 2. Number counter animation counting up from 0 to target
     const counterElements = document.querySelectorAll('.counter-val')
     counterElements.forEach((el) => {
       const target = parseFloat(el.getAttribute('data-target') || '0')
@@ -116,17 +114,17 @@ export function DashboardView({
       })
     })
 
-    // 3. Stagger animasi daftar peringkat SAW
+    // 3. Stagger bouncy entrance for ranking capsule cards
     anime({
       targets: '.animate-ranking-item',
-      translateX: [-14, 0],
+      translateX: [-16, 0],
       opacity: [0, 1],
       delay: anime.stagger(70, { start: 250 }),
-      easing: 'easeOutCubic',
-      duration: 550,
+      easing: 'easeOutBack',
+      duration: 600,
     })
 
-    // 4. Animasi Progress bar nilai V yang memanjang dari 0%
+    // 4. 3D Clay Progress Bar fill animation
     anime({
       targets: '.progress-v-fill',
       width: (el) => [0, el.getAttribute('data-width') || '0%'],
@@ -134,9 +132,19 @@ export function DashboardView({
       easing: 'easeOutQuart',
       duration: 1100,
     })
+
+    // 5. Timeline items stagger
+    anime({
+      targets: '.animate-timeline-item',
+      translateY: [12, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(60, { start: 300 }),
+      easing: 'easeOutBack',
+      duration: 550,
+    })
   }, [])
 
-  // Initialize Donut Chart (Chart.js)
+  // Initialize Donut Chart (Chart.js) with soft pastel clay colors
   useEffect(() => {
     const Chart = typeof window !== 'undefined' ? window.Chart : null
     if (!Chart || !chartCanvasRef.current) return
@@ -154,17 +162,16 @@ export function DashboardView({
             data: [verifiedCount, pendingCount, otherCount],
             backgroundColor: ['#16765b', '#f59e0b', '#94a3b8'],
             hoverBackgroundColor: ['#1b8a6a', '#fbbf24', '#cbd5e1'],
-            borderWidth: 3,
-            borderColor: '#ffffff',
-            borderRadius: 6,
-            spacing: 2,
+            borderWidth: 0,
+            borderRadius: 8,
+            spacing: 5,
           },
         ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: '72%',
+        cutout: '74%',
         animation: {
           animateScale: true,
           animateRotate: true,
@@ -177,8 +184,8 @@ export function DashboardView({
             backgroundColor: '#09291f',
             titleFont: { family: "'Manrope Variable', sans-serif", weight: 'bold', size: 12 },
             bodyFont: { family: "'DM Sans Variable', sans-serif", size: 12 },
-            padding: 10,
-            cornerRadius: 8,
+            padding: 12,
+            cornerRadius: 12,
             boxPadding: 4,
             callbacks: {
               label: (item) => ` ${item.label}: ${item.raw} orang`,
@@ -201,76 +208,73 @@ export function DashboardView({
         actions={
           <button
             type="button"
-            className="btn-calc-glow"
+            className="clay-btn"
             onClick={() => onNavigate('saw-calc')}
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
-              fontSize: '13px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              boxShadow: '0 2px 8px rgba(22, 118, 91, 0.25)',
-              cursor: 'pointer',
+              padding: '12px 24px',
+              fontSize: '13.5px',
             }}
           >
-            <span className="calc-icon-spin">
-              <Calculator size={17} />
+            <span className="calc-icon-spin" style={{ display: 'inline-flex' }}>
+              <Calculator size={18} />
             </span>
             <span>Jalankan Hitung SAW</span>
           </button>
         }
       />
 
-      {/* KPI Cards Grid (4 Cards with Squircle & Micro-details) */}
+      {/* 4 Kartu Statistik Atas Bergaya 3D Claymorphism */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-          gap: '16px',
-          marginBottom: '24px',
+          gap: '22px',
+          marginBottom: '32px',
         }}
       >
         <KpiCard
-          className="animate-card"
+          clay
+          className="clay-card clay-anim-card"
           title="Total Data Warga"
           value={residents.length}
           subtitle="Tercatat di basis data lokal"
-          icon={<Users size={22} />}
-          iconBg="#e0f2fe"
+          icon={<Users size={24} />}
+          iconBg="#dbeafe"
           iconColor="#0284c7"
+          badge="Database Lokal"
         />
         <KpiCard
-          className="animate-card"
+          clay
+          className="clay-card clay-anim-card"
           title="Calon Terverifikasi"
           value={verifiedCount}
           subtitle={`${pendingCount} berkas menunggu antrean`}
-          icon={<CheckCircle2 size={22} />}
+          icon={<CheckCircle2 size={24} />}
           iconBg="#dcfce7"
           iconColor="#16a34a"
           badge="Siap Hitung"
+          pulseBadge
         />
         <KpiCard
-          className="animate-card"
+          clay
           highlight
           decorativeSvg
+          className="clay-card-dark clay-anim-card"
           title="Pagu Kuota Bantuan"
           value={quota}
           subtitle={`Periode: ${activePeriod?.name || 'Aktif'}`}
-          icon={<Target size={22} />}
-          iconBg="rgba(181, 245, 106, 0.18)"
+          icon={<Target size={24} />}
+          iconBg="rgba(181, 245, 106, 0.22)"
           iconColor="var(--color-lime)"
           badge="Tahap I 2026"
         />
         <KpiCard
-          className="animate-card"
+          clay
+          className="clay-card clay-anim-card"
           title="Status Run SAW"
           value={calculationRun ? 'Siap' : 'Belum'}
           subtitle={calculationRun ? `${calculationRun.results.length} alternatif dihitung` : 'Jalankan kalkulasi'}
-          icon={<BarChart3 size={22} />}
+          icon={<BarChart3 size={24} />}
           iconBg="#f3e8ff"
           iconColor="#9333ea"
           badge={calculationRun?.status || 'IDLE'}
@@ -283,38 +287,94 @@ export function DashboardView({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
-          gap: '20px',
-          marginBottom: '24px',
+          gap: '26px',
+          marginBottom: '32px',
         }}
       >
-        {/* Peringkat 5 Tertinggi dengan Progress Bar V */}
-        <Panel
-          title="Peringkat 5 Tertinggi (Hasil SAW)"
-          subtitle="Nilai preferensi V dihitung murni dengan formula SAW."
-          actions={
+        {/* Peringkat 5 Tertinggi Bergaya Claymorphism 3D */}
+        <div
+          className="clay-card clay-anim-card"
+          style={{
+            padding: '28px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Header */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '22px',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <h3
+                  style={{
+                    fontSize: '17px',
+                    fontWeight: '800',
+                    color: 'var(--color-green-950)',
+                    fontFamily: 'var(--font-heading)',
+                  }}
+                >
+                  Peringkat 5 Tertinggi (Hasil SAW)
+                </h3>
+                <span
+                  className="clay-badge"
+                  style={{
+                    backgroundColor: '#edf8f3',
+                    color: 'var(--color-green-700)',
+                    padding: '4px 12px',
+                    fontSize: '11px',
+                  }}
+                >
+                  Metode SAW
+                </span>
+              </div>
+              <p style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', marginTop: '3px' }}>
+                Nilai preferensi V dihitung murni dengan formula deterministik SAW.
+              </p>
+            </div>
+
             <button
               type="button"
               onClick={() => onNavigate('saw-ranking')}
+              className="clay-badge"
               style={{
-                fontSize: '12.5px',
+                backgroundColor: '#ffffff',
                 color: 'var(--color-green-700)',
-                fontWeight: '700',
+                cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '6px',
+                fontSize: '12px',
+                padding: '6px 14px',
               }}
             >
               <span>Lihat Semua</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={13} />
             </button>
-          }
-        >
+          </div>
+
+          {/* Ranking List */}
           {topRankings.length === 0 ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '13px' }}>
-              Belum ada hasil kalkulasi SAW.
-            </p>
+            <div
+              className="clay-item"
+              style={{
+                padding: '30px',
+                textAlign: 'center',
+                color: 'var(--color-text-muted)',
+                fontSize: '13.5px',
+              }}
+            >
+              Belum ada hasil kalkulasi SAW. Klik tombol &quot;Jalankan Hitung SAW&quot; di atas untuk memulai.
+            </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
               {topRankings.map((row) => {
                 const cand = candidates.find((c) => c.id === row.candidateId)
                 const resident = residents.find((r) => r.id === cand?.residentId)
@@ -328,47 +388,54 @@ export function DashboardView({
                   valDecimal = den > 0 ? num / den : 0
                 } else if (typeof row.preference?.exact === 'number') {
                   valDecimal = row.preference.exact
+                } else if (typeof row.preference?.exact === 'string') {
+                  const parts = row.preference.exact.split('/')
+                  if (parts.length === 2 && Number(parts[1]) > 0) {
+                    valDecimal = Number(parts[0]) / Number(parts[1])
+                  } else {
+                    valDecimal = parseFloat(row.preference.exact) || 0
+                  }
                 }
                 const progressWidthPercent = Math.min(100, Math.max(0, valDecimal * 100)).toFixed(1)
 
                 return (
                   <div
                     key={row.candidateId}
-                    className="animate-ranking-item ranking-item-card"
+                    className="animate-ranking-item clay-item"
                     style={{
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: isWithinQuota ? '#edf8f3' : 'var(--color-surface)',
-                      border: isWithinQuota ? '1px solid var(--color-success-border)' : '1px solid var(--color-line)',
-                      padding: '12px 16px 14px',
-                      overflow: 'hidden',
-                      position: 'relative',
+                      padding: '16px 20px',
+                      backgroundColor: '#ffffff',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <span
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                        {/* Bola Nomor Urut 3D Clay Marble */}
+                        <div
+                          className="clay-marble"
                           style={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
-                            backgroundColor: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-surface-muted)',
-                            color: isWithinQuota ? '#ffffff' : 'var(--color-text-muted)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            width: '40px',
+                            height: '40px',
+                            background: isWithinQuota
+                              ? 'linear-gradient(135deg, #1b8a6a, #16765b)'
+                              : 'linear-gradient(135deg, #94a3b8, #64748b)',
+                            color: '#ffffff',
                             fontWeight: '800',
-                            fontSize: '13.5px',
-                            boxShadow: isWithinQuota ? '0 2px 6px rgba(22, 118, 91, 0.25)' : 'none',
+                            fontSize: '14px',
+                            fontFamily: 'monospace',
+                            boxShadow: isWithinQuota
+                              ? '4px 6px 14px rgba(22, 118, 91, 0.35), inset 3px 3px 6px rgba(255, 255, 255, 0.65), inset -3px -3px 6px rgba(0, 0, 0, 0.25)'
+                              : '4px 6px 14px rgba(100, 116, 139, 0.25), inset 3px 3px 6px rgba(255, 255, 255, 0.65), inset -3px -3px 6px rgba(0, 0, 0, 0.25)',
                           }}
                         >
-                          {row.rank}
-                        </span>
+                          #{row.rank}
+                        </div>
+
                         <div>
-                          <div style={{ fontWeight: '700', fontSize: '14px', color: 'var(--color-green-950)' }}>
+                          <div style={{ fontWeight: '800', fontSize: '14.5px', color: 'var(--color-green-950)' }}>
                             {resident?.name || row.candidateId}
                           </div>
                           <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
-                            NIK: {resident?.nikMasked || '—'} · RT/RW: {resident?.addressRtRw || '—'}
+                            NIK: <code>{resident?.nikMasked || '—'}</code> · RT/RW: {resident?.addressRtRw || '—'}
                           </div>
                         </div>
                       </div>
@@ -376,7 +443,7 @@ export function DashboardView({
                       <div style={{ textAlign: 'right' }}>
                         <div
                           style={{
-                            fontSize: '15px',
+                            fontSize: '15.5px',
                             fontWeight: '800',
                             fontFamily: 'monospace',
                             color: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-text-main)',
@@ -385,10 +452,13 @@ export function DashboardView({
                           V = {formatExact(row.preference.exact, 4)}
                         </div>
                         <span
+                          className="clay-badge"
                           style={{
+                            marginTop: '4px',
                             fontSize: '11px',
-                            color: isWithinQuota ? 'var(--color-success)' : 'var(--color-text-subtle)',
-                            fontWeight: '700',
+                            padding: '3px 10px',
+                            backgroundColor: isWithinQuota ? '#edf8f3' : '#fef8ee',
+                            color: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-warning)',
                           }}
                         >
                           {isWithinQuota ? 'Dalam Kuota' : 'Cadangan'}
@@ -396,29 +466,23 @@ export function DashboardView({
                       </div>
                     </div>
 
-                    {/* Progress Bar horizontal representasi nilai V */}
+                    {/* Progress Bar 3D Cekung (Sunken Track + Puffy Fill) */}
                     <div
+                      className="clay-sunken"
                       style={{
-                        marginTop: '10px',
+                        marginTop: '14px',
                         width: '100%',
-                        height: '5px',
-                        backgroundColor: 'rgba(0, 0, 0, 0.06)',
-                        borderRadius: '999px',
-                        overflow: 'hidden',
-                        position: 'relative',
+                        height: '10px',
                       }}
                     >
                       <div
-                        className="progress-v-fill"
+                        className="progress-v-fill clay-progress-fill"
                         data-width={`${progressWidthPercent}%`}
                         style={{
-                          height: '100%',
                           width: `${progressWidthPercent}%`,
                           background: isWithinQuota
                             ? 'linear-gradient(90deg, #16765b 0%, #20b47c 65%, #b5f56a 100%)'
                             : 'linear-gradient(90deg, #d97706 0%, #f59e0b 60%, #fde68a 100%)',
-                          borderRadius: '999px',
-                          boxShadow: isWithinQuota ? '0 0 8px rgba(32, 180, 124, 0.4)' : 'none',
                         }}
                       />
                     </div>
@@ -427,17 +491,38 @@ export function DashboardView({
               })}
             </div>
           )}
-        </Panel>
+        </div>
 
-        {/* Donut Chart: Proporsi Status Verifikasi & Kesiapan Kuota */}
-        <Panel
-          title="Distribusi Status Verifikasi Warga"
-          subtitle={`Total ${residents.length} warga tercatat dalam database.`}
+        {/* Visualisasi Data: Donut Chart Status Verifikasi Bergaya 3D Clay */}
+        <div
+          className="clay-card clay-anim-card"
+          style={{
+            padding: '28px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ position: 'relative', width: '220px', height: '200px', margin: '6px 0 16px' }}>
+          {/* Header */}
+          <div style={{ marginBottom: '18px' }}>
+            <h3
+              style={{
+                fontSize: '17px',
+                fontWeight: '800',
+                color: 'var(--color-green-950)',
+                fontFamily: 'var(--font-heading)',
+              }}
+            >
+              Distribusi Status Verifikasi Warga
+            </h3>
+            <p style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', marginTop: '3px' }}>
+              Total {residents.length} warga tercatat dalam database sistem.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+            <div style={{ position: 'relative', width: '220px', height: '210px', margin: '4px 0 18px' }}>
               <canvas ref={chartCanvasRef} />
-              {/* Central stat indicator */}
+              {/* Central Floating 3D Clay Stat Bubble */}
               <div
                 style={{
                   position: 'absolute',
@@ -449,46 +534,83 @@ export function DashboardView({
                   pointerEvents: 'none',
                 }}
               >
-                <span
+                <div
+                  className="clay-bubble"
                   style={{
-                    fontSize: '26px',
-                    fontWeight: '800',
-                    fontFamily: 'var(--font-heading)',
-                    color: 'var(--color-green-950)',
-                    lineHeight: 1,
+                    width: '96px',
+                    height: '96px',
+                    borderRadius: '50%',
+                    backgroundColor: '#ffffff',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  {verifiedCount}
-                </span>
-                <span
-                  style={{
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    color: 'var(--color-text-muted)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    marginTop: '3px',
-                  }}
-                >
-                  Siap Seleksi
-                </span>
+                  <span
+                    style={{
+                      fontSize: '30px',
+                      fontWeight: '800',
+                      fontFamily: 'var(--font-heading)',
+                      color: 'var(--color-green-950)',
+                      lineHeight: 1,
+                    }}
+                  >
+                    {verifiedCount}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '10px',
+                      fontWeight: '800',
+                      color: 'var(--color-green-700)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      marginTop: '3px',
+                    }}
+                  >
+                    Siap Seleksi
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Interactive legend chips */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', width: '100%' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '3px', backgroundColor: '#16765b' }} />
+            {/* Interactive 3D Clay Pill Legends */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', width: '100%' }}>
+              <div
+                className="clay-badge"
+                style={{
+                  backgroundColor: '#ffffff',
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                }}
+              >
+                <span className="clay-marble" style={{ width: '10px', height: '10px', backgroundColor: '#16765b' }} />
                 <span style={{ color: 'var(--color-text-muted)' }}>Terverifikasi:</span>
                 <strong style={{ color: 'var(--color-green-950)' }}>{verifiedCount}</strong>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '3px', backgroundColor: '#f59e0b' }} />
+
+              <div
+                className="clay-badge"
+                style={{
+                  backgroundColor: '#ffffff',
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                }}
+              >
+                <span className="clay-marble" style={{ width: '10px', height: '10px', backgroundColor: '#f59e0b' }} />
                 <span style={{ color: 'var(--color-text-muted)' }}>Antrean:</span>
                 <strong style={{ color: 'var(--color-green-950)' }}>{pendingCount}</strong>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '3px', backgroundColor: '#94a3b8' }} />
+
+              <div
+                className="clay-badge"
+                style={{
+                  backgroundColor: '#ffffff',
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                }}
+              >
+                <span className="clay-marble" style={{ width: '10px', height: '10px', backgroundColor: '#94a3b8' }} />
                 <span style={{ color: 'var(--color-text-muted)' }}>Lainnya:</span>
                 <strong style={{ color: 'var(--color-green-950)' }}>
                   {Math.max(0, residents.length - verifiedCount - pendingCount)}
@@ -496,60 +618,103 @@ export function DashboardView({
               </div>
             </div>
 
+            {/* Bottom 3D Clay Status Banner */}
             <div
+              className="clay-item"
               style={{
-                marginTop: '16px',
+                marginTop: '20px',
                 width: '100%',
-                padding: '10px 14px',
-                backgroundColor: 'var(--color-surface-muted)',
-                borderRadius: 'var(--radius-md)',
+                padding: '12px 20px',
+                backgroundColor: '#edf8f3',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                fontSize: '12px',
+                fontSize: '12.5px',
               }}
             >
-              <span style={{ color: 'var(--color-text-muted)' }}>Alokasi Kuota Bantuan:</span>
-              <span style={{ fontWeight: '700', color: 'var(--color-green-900)' }}>
+              <span style={{ color: 'var(--color-text-muted)', fontWeight: '600' }}>Alokasi Pagu Bantuan:</span>
+              <span
+                className="clay-badge"
+                style={{
+                  backgroundColor: '#ffffff',
+                  fontWeight: '800',
+                  color: 'var(--color-green-900)',
+                  fontSize: '12px',
+                  padding: '4px 12px',
+                }}
+              >
                 {quota} Calon Terpilih
               </span>
             </div>
           </div>
-        </Panel>
+        </div>
       </div>
 
-      {/* Vertical Timeline: Aktivitas Audit Terbaru */}
-      <Panel
-        title="Aktivitas Audit Terbaru"
-        subtitle="Jejak aktivitas pencatatan sistem (append-only timeline)."
-        actions={
+      {/* Vertical Timeline: Aktivitas Audit Terbaru Bergaya 3D Clay */}
+      <div
+        className="clay-card clay-anim-card"
+        style={{
+          padding: '28px',
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '24px',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}
+        >
+          <div>
+            <h3
+              style={{
+                fontSize: '17px',
+                fontWeight: '800',
+                color: 'var(--color-green-950)',
+                fontFamily: 'var(--font-heading)',
+              }}
+            >
+              Aktivitas Audit Terbaru
+            </h3>
+            <p style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', marginTop: '3px' }}>
+              Jejak aktivitas pencatatan sistem (append-only timeline dengan verifikasi aktor).
+            </p>
+          </div>
+
           <button
             type="button"
             onClick={() => onNavigate('audit')}
+            className="clay-badge"
             style={{
-              fontSize: '12.5px',
+              backgroundColor: '#ffffff',
               color: 'var(--color-green-700)',
-              fontWeight: '700',
+              cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: '6px',
+              fontSize: '12px',
+              padding: '6px 14px',
             }}
           >
             <span>Log Lengkap</span>
-            <ArrowRight size={14} />
+            <ArrowRight size={13} />
           </button>
-        }
-      >
-        <div style={{ position: 'relative', paddingLeft: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {/* Continuous vertical timeline connector line */}
+        </div>
+
+        {/* Vertical Timeline */}
+        <div style={{ position: 'relative', paddingLeft: '34px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Continuous vertical timeline connector rail */}
           <div
+            className="clay-sunken"
             style={{
               position: 'absolute',
-              left: '13px',
-              top: '12px',
-              bottom: '12px',
-              width: '2px',
-              backgroundColor: 'var(--color-line-dark)',
+              left: '12px',
+              top: '16px',
+              bottom: '16px',
+              width: '6px',
               zIndex: 0,
             }}
           />
@@ -561,33 +726,25 @@ export function DashboardView({
             return (
               <div
                 key={log.id}
-                className="timeline-item-card"
+                className="animate-timeline-item clay-item"
                 style={{
                   position: 'relative',
-                  backgroundColor: 'var(--color-surface)',
-                  border: '1px solid var(--color-line)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '12px 16px',
-                  boxShadow: 'var(--shadow-sm)',
+                  padding: '16px 20px',
                 }}
               >
-                {/* Node Dot on the timeline */}
+                {/* 3D Clay Marble Node on the timeline */}
                 <div
+                  className="clay-marble"
                   style={{
                     position: 'absolute',
-                    left: '-32px',
-                    top: '14px',
-                    width: '26px',
-                    height: '26px',
-                    borderRadius: '50%',
-                    backgroundColor: style.bg,
+                    left: '-36px',
+                    top: '18px',
+                    width: '32px',
+                    height: '32px',
+                    background: style.bg,
                     color: style.color,
-                    border: `2px solid ${style.border}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    boxShadow: style.marbleShadow,
                     zIndex: 2,
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.06)',
                   }}
                   aria-hidden="true"
                 >
@@ -598,7 +755,7 @@ export function DashboardView({
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontWeight: '700', fontSize: '13.5px', color: 'var(--color-green-950)' }}>
+                      <span style={{ fontWeight: '800', fontSize: '14px', color: 'var(--color-green-950)' }}>
                         {log.action}
                       </span>
                       <StatusBadge status={log.outcome} />
@@ -608,21 +765,19 @@ export function DashboardView({
                       {log.requestSummary || `${log.targetType} (${log.targetId})`}
                     </div>
 
-                    {/* Actor Initial Avatar & Name */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginTop: '8px' }}>
+                    {/* Actor Initial Avatar & Name with 3D Bubble */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
                       <div
+                        className="clay-bubble"
                         style={{
-                          width: '22px',
-                          height: '22px',
+                          width: '28px',
+                          height: '28px',
                           borderRadius: '50%',
                           backgroundColor: '#dcfce7',
                           color: '#16765b',
-                          fontSize: '10px',
+                          fontSize: '11px',
                           fontWeight: '800',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          border: '1px solid #bbf7d0',
+                          border: 'none',
                         }}
                         title={log.actorName}
                       >
@@ -634,7 +789,15 @@ export function DashboardView({
                     </div>
                   </div>
 
-                  <div style={{ textAlign: 'right', fontSize: '11.5px', color: 'var(--color-text-subtle)' }}>
+                  <div
+                    className="clay-badge"
+                    style={{
+                      backgroundColor: '#f6f8f7',
+                      fontSize: '11px',
+                      color: 'var(--color-text-subtle)',
+                      padding: '4px 12px',
+                    }}
+                  >
                     {new Date(log.occurredAt).toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'short',
@@ -646,7 +809,7 @@ export function DashboardView({
             )
           })}
         </div>
-      </Panel>
+      </div>
     </div>
   )
 }

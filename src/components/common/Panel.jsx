@@ -1,23 +1,17 @@
-
-
 export function Panel({ title, subtitle, actions, children, style = {} }) {
   return (
     <div
+      className="clay-card"
       style={{
-        backgroundColor: 'var(--color-surface)',
-        borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--color-line)',
-        boxShadow: 'var(--shadow-sm)',
-        overflow: 'hidden',
-        marginBottom: 'var(--space-lg)',
+        padding: '26px 28px',
+        marginBottom: '28px',
         ...style,
       }}
     >
       {(title || actions) && (
         <div
           style={{
-            padding: 'var(--space-md) var(--space-lg)',
-            borderBottom: '1px solid var(--color-line)',
+            marginBottom: '20px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -29,9 +23,10 @@ export function Panel({ title, subtitle, actions, children, style = {} }) {
             {title && (
               <h3
                 style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
+                  fontSize: '17px',
+                  fontWeight: '800',
                   color: 'var(--color-green-950)',
+                  fontFamily: 'var(--font-heading)',
                 }}
               >
                 {title}
@@ -40,19 +35,23 @@ export function Panel({ title, subtitle, actions, children, style = {} }) {
             {subtitle && (
               <p
                 style={{
-                  fontSize: '13px',
+                  fontSize: '12.5px',
                   color: 'var(--color-text-muted)',
-                  marginTop: '2px',
+                  marginTop: '3px',
                 }}
               >
                 {subtitle}
               </p>
             )}
           </div>
-          {actions && <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>{actions}</div>}
+          {actions && (
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+              {actions}
+            </div>
+          )}
         </div>
       )}
-      <div style={{ padding: 'var(--space-lg)' }}>{children}</div>
+      <div>{children}</div>
     </div>
   )
 }

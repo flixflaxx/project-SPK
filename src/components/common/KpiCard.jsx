@@ -1,5 +1,3 @@
-
-
 export function KpiCard({
   title,
   value,
@@ -12,35 +10,31 @@ export function KpiCard({
   decorativeSvg = false,
   pulseBadge = false,
   className = '',
+  clay = true,
 }) {
   const isNumeric = typeof value === 'number' || (!Number.isNaN(Number(value)) && String(value).trim() !== '')
 
+  const cardClass = highlight ? 'clay-card-dark' : 'clay-card'
+
   return (
     <div
-      className={`kpi-card ${className}`.trim()}
+      className={`kpi-card ${clay ? cardClass : ''} ${className}`.trim()}
       style={{
-        backgroundColor: highlight ? 'var(--color-green-950)' : 'var(--color-surface)',
-        color: highlight ? 'var(--color-text-inverse)' : 'var(--color-text-main)',
-        borderRadius: 'var(--radius-lg)',
-        padding: '18px 20px',
-        border: highlight ? '1px solid rgba(181, 245, 106, 0.3)' : '1px solid var(--color-line)',
-        boxShadow: highlight
-          ? '0 10px 25px rgba(9, 41, 31, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-          : 'var(--shadow-sm)',
+        borderRadius: '28px',
+        padding: '24px 26px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '124px',
-        transition: 'all var(--transition-normal)',
+        minHeight: '136px',
       }}
     >
       {/* Decorative background SVG pattern on highlighted dark card */}
       {highlight && decorativeSvg && (
         <svg
-          width="130"
-          height="130"
+          width="140"
+          height="140"
           viewBox="0 0 130 130"
           fill="none"
           aria-hidden="true"
@@ -49,7 +43,7 @@ export function KpiCard({
             right: '-15px',
             bottom: '-20px',
             pointerEvents: 'none',
-            opacity: 0.15,
+            opacity: 0.18,
           }}
         >
           <circle cx="65" cy="65" r="56" stroke="#b5f56a" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -65,12 +59,12 @@ export function KpiCard({
         </svg>
       )}
 
-      {/* Top Header Row: Label & Squircle Icon */}
+      {/* Top Header Row: Label & 3D Clay Bubble Icon */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', zIndex: 1 }}>
         <span
           style={{
             fontSize: '12.5px',
-            fontWeight: '700',
+            fontWeight: '800',
             color: highlight ? '#9fe8d0' : 'var(--color-text-muted)',
             textTransform: 'uppercase',
             letterSpacing: '0.6px',
@@ -80,19 +74,13 @@ export function KpiCard({
         </span>
         {icon && (
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
-              backgroundColor: iconBg || (highlight ? 'rgba(181, 245, 106, 0.18)' : '#edf8f3'),
+              width: '48px',
+              height: '48px',
+              borderRadius: '18px',
+              backgroundColor: iconBg || (highlight ? 'rgba(181, 245, 106, 0.22)' : '#edf8f3'),
               color: iconColor || (highlight ? 'var(--color-lime)' : 'var(--color-green-700)'),
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              boxShadow: highlight
-                ? '0 4px 12px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(181, 245, 106, 0.25)'
-                : '0 2px 6px rgba(0, 0, 0, 0.04)',
             }}
             aria-hidden="true"
           >
@@ -102,13 +90,13 @@ export function KpiCard({
       </div>
 
       {/* Bottom Row: Counter Value & Subtitle */}
-      <div style={{ marginTop: '12px', zIndex: 1 }}>
+      <div style={{ marginTop: '16px', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flexWrap: 'wrap' }}>
           <span
             className={isNumeric ? 'counter-val' : undefined}
             data-target={isNumeric ? value : undefined}
             style={{
-              fontSize: '32px',
+              fontSize: '36px',
               fontWeight: '800',
               fontFamily: 'var(--font-heading)',
               color: highlight ? 'var(--color-lime)' : 'var(--color-green-950)',
@@ -120,17 +108,14 @@ export function KpiCard({
           </span>
           {badge && (
             <span
+              className="clay-badge"
               style={{
                 fontSize: '11px',
-                padding: '3px 8px',
-                borderRadius: 'var(--radius-sm)',
-                backgroundColor: highlight ? 'rgba(181, 245, 106, 0.2)' : 'var(--color-success-bg)',
+                padding: '4px 12px',
+                borderRadius: '9999px',
+                backgroundColor: highlight ? 'rgba(181, 245, 106, 0.18)' : '#edf8f3',
                 color: highlight ? 'var(--color-lime)' : 'var(--color-success)',
                 fontWeight: '700',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                border: highlight ? '1px solid rgba(181, 245, 106, 0.3)' : '1px solid var(--color-success-border)',
               }}
             >
               {pulseBadge && <span className="pulse-indicator" aria-hidden="true" />}
@@ -141,9 +126,10 @@ export function KpiCard({
         {subtitle && (
           <p
             style={{
-              fontSize: '12px',
-              marginTop: '5px',
+              fontSize: '12.5px',
+              marginTop: '6px',
               color: highlight ? '#c8ded5' : 'var(--color-text-subtle)',
+              fontWeight: '500',
             }}
           >
             {subtitle}

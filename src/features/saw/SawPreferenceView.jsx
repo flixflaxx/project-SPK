@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Calculator, Award, SlidersHorizontal } from 'lucide-react'
 import { PageHeader } from '../../components/common/PageHeader.jsx'
 import { Panel } from '../../components/common/Panel.jsx'
 import { formatExact } from '@shared/domain/saw/fraction.js'
@@ -9,6 +9,14 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.anime && containerRef.current) {
+      window.anime({
+        targets: containerRef.current.querySelectorAll('.pref-stat-card'),
+        opacity: [0, 1],
+        translateY: [12, 0],
+        delay: window.anime.stagger(80),
+        duration: 450,
+        easing: 'easeOutCubic',
+      })
       window.anime({
         targets: containerRef.current.querySelectorAll('.pref-row'),
         opacity: [0, 1],
@@ -35,46 +43,183 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
           description="Rincian kontribusi terbobot wⱼ × rᵢⱼ per kriteria dan akumulasi nilai preferensi V."
         />
         <Panel>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '13.5px' }}>
-            Belum ada hasil kalkulasi SAW.
-          </p>
+          <div
+            className="clay-item"
+            style={{
+              padding: '24px',
+              textAlign: 'center',
+              color: 'var(--color-text-muted)',
+              fontSize: '13.5px',
+            }}
+          >
+            Belum ada hasil kalkulasi SAW untuk periode ini. Silakan jalankan kalkulasi pada menu <strong>Kalkulasi SAW</strong>.
+          </div>
         </Panel>
       </div>
     )
   }
 
   const { criteria, results } = calculationRun
+  const topResult = results[0]
+  const topV = topResult ? formatExact(topResult.preference.exact, 4) : '0'
 
   return (
     <div ref={containerRef}>
       <PageHeader
         featureNum={12}
         title="Perhitungan Nilai Preferensi (V)"
-        description="Rincian nilai preferensi akhir hasil perkalian bobot kriteria dengan nilai ternormalisasi."
+        description="Rincian nilai preferensi akhir hasil perkalian bobot kriteria (wⱼ) dengan matriks ternormalisasi (rᵢⱼ)."
       />
 
-      <Panel title="Tabel Kontribusi Terbobot & Nilai V Akhir">
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+      {/* Top 3 Claymorphism Metric Cards */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '16px',
+          marginBottom: '20px',
+        }}
+      >
+        <div
+          className="pref-stat-card clay-card"
+          style={{
+            padding: '18px 22px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              ALTERNATIF DIHITUNG
+            </div>
+            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+              {results.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+              Lolos verifikasi kelayakan
+            </div>
+          </div>
+          <div
+            className="clay-bubble"
+            style={{
+              width: '44px',
+              height: '44px',
+              backgroundColor: '#e0f2fe',
+              color: '#0284c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Calculator size={22} />
+          </div>
+        </div>
+
+        <div
+          className="pref-stat-card clay-card"
+          style={{
+            padding: '18px 22px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+                NILAI V TERTINGGI
+              </span>
+              <span className="pulse-indicator" />
+            </div>
+            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+              {topV}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+              Peringkat 1 ({residents.find((r) => r.id === candidates.find((c) => c.id === topResult?.candidateId)?.residentId)?.name || 'Kandidat'})
+            </div>
+          </div>
+          <div
+            className="clay-bubble"
+            style={{
+              width: '44px',
+              height: '44px',
+              backgroundColor: '#edf8f3',
+              color: 'var(--color-green-700)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Award size={22} />
+          </div>
+        </div>
+
+        <div
+          className="pref-stat-card clay-card"
+          style={{
+            padding: '18px 22px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+          }}
+        >
+          <div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              DIMENSI KRITERIA
+            </div>
+            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
+              {criteria.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Kriteria</span>
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+              Total akumulasi bobot = 1.00
+            </div>
+          </div>
+          <div
+            className="clay-bubble"
+            style={{
+              width: '44px',
+              height: '44px',
+              backgroundColor: '#fef3c7',
+              color: 'var(--color-warning)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <SlidersHorizontal size={22} />
+          </div>
+        </div>
+      </div>
+
+      <Panel title="Tabel Kontribusi Terbobot (w × r) & Akumulasi Nilai V">
+        <div style={{ overflowX: 'auto', padding: '4px' }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'separate',
+              borderSpacing: '0 8px',
+              fontSize: '13px',
+            }}
+          >
             <thead>
-              <tr style={{ backgroundColor: 'var(--color-surface-muted)', borderBottom: '2px solid var(--color-line)' }}>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '700' }}>Alternatif Calon</th>
+              <tr style={{ color: 'var(--color-text-muted)', fontSize: '11.5px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                <th style={{ padding: '12px 18px', textAlign: 'left', fontWeight: '800' }}>Alternatif Calon</th>
                 {criteria.map((c) => (
-                  <th key={c.code} style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '700' }}>
+                  <th key={c.code} style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '800' }}>
                     <div>w × r({c.code})</div>
-                    <div style={{ fontSize: '10.5px', color: 'var(--color-text-muted)', fontWeight: 'normal' }}>
+                    <div style={{ fontSize: '10px', color: 'var(--color-text-subtle)', fontWeight: '600', textTransform: 'none' }}>
                       (W={c.weightText})
                     </div>
                   </th>
                 ))}
                 <th
                   style={{
-                    padding: '12px 18px',
+                    padding: '12px 20px',
                     textAlign: 'right',
                     fontWeight: '800',
-                    backgroundColor: '#e8f7f0',
-                    color: 'var(--color-green-950)',
-                    width: '220px',
+                    width: '230px',
+                    color: 'var(--color-green-900)',
                   }}
                 >
                   Nilai Preferensi (V)
@@ -82,7 +227,7 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
               </tr>
             </thead>
             <tbody>
-              {results.map((row, idx) => {
+              {results.map((row) => {
                 const cand = candidates.find((c) => c.id === row.candidateId)
                 const res = residents.find((r) => r.id === cand?.residentId)
                 const formatted = formatExact(row.preference.exact, 6)
@@ -93,66 +238,74 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
                 return (
                   <tr
                     key={row.candidateId}
-                    className="pref-row"
+                    className="pref-row clay-item"
                     style={{
-                      borderBottom: '1px solid var(--color-line)',
-                      backgroundColor: idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-hover)',
+                      transition: 'all 0.2s ease',
                     }}
                   >
-                    <td style={{ padding: '12px 16px' }}>
+                    <td
+                      style={{
+                        padding: '14px 18px',
+                        borderTopLeftRadius: '16px',
+                        borderBottomLeftRadius: '16px',
+                      }}
+                    >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>
+                        <span style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>
                           {res?.name || row.candidateId}
                         </span>
                         {isRankOne && (
                           <span
+                            className="clay-badge"
                             style={{
                               fontSize: '10px',
                               fontWeight: '800',
                               backgroundColor: 'var(--color-lime)',
                               color: 'var(--color-green-950)',
-                              padding: '2px 6px',
-                              borderRadius: '4px',
+                              padding: '2px 8px',
                               display: 'inline-flex',
                               alignItems: 'center',
-                              gap: '3px',
+                              gap: '4px',
                             }}
                           >
-                            <Sparkles size={11} /> Top
+                            <Sparkles size={11} /> Top Rank
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
-                        NIK: <code>{res?.nikMasked || '—'}</code>
+                      <div style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
+                        NIK: <code style={{ color: 'var(--color-green-700)' }}>{res?.nikMasked || '—'}</code>
                       </div>
                     </td>
+
                     {criteria.map((c) => {
                       const contrib = row.contributions[c.code]
                       return (
                         <td
                           key={c.code}
                           style={{
-                            padding: '12px 16px',
+                            padding: '14px 16px',
                             textAlign: 'right',
                           }}
                         >
-                          <div style={{ fontFamily: 'monospace', fontWeight: '600', color: 'var(--color-text-main)' }}>
+                          <div style={{ fontFamily: 'monospace', fontWeight: '700', color: 'var(--color-text-main)' }}>
                             {formatExact(contrib.exact, 4)}
                           </div>
-                          <div style={{ fontSize: '9.5px', color: 'var(--color-text-subtle)', fontFamily: 'monospace' }}>
+                          <div style={{ fontSize: '9.5px', color: 'var(--color-text-subtle)', fontFamily: 'monospace', marginTop: '1px' }}>
                             [{contrib.exact}]
                           </div>
                         </td>
                       )
                     })}
+
                     <td
                       style={{
-                        padding: '12px 18px',
-                        backgroundColor: '#edf8f3',
+                        padding: '14px 20px',
+                        borderTopRightRadius: '16px',
+                        borderBottomRightRadius: '16px',
                       }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                        <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', fontWeight: '600' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '6px' }}>
+                        <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', fontWeight: '700' }}>
                           V =
                         </span>
                         <span
@@ -166,23 +319,22 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
                           {formatExact(row.preference.exact, 6)}
                         </span>
                       </div>
-                      {/* Visual progress bar */}
+                      {/* Sunken Clay Progress Bar */}
                       <div
+                        className="clay-sunken"
                         style={{
-                          height: '5px',
-                          backgroundColor: '#d2ddd6',
+                          height: '8px',
                           borderRadius: '9999px',
                           overflow: 'hidden',
-                          marginTop: '4px',
+                          padding: '1px',
                         }}
                       >
                         <div
-                          className="pref-fill-bar"
+                          className="pref-fill-bar clay-progress-fill"
                           data-width={`${vPct}%`}
                           style={{
                             height: '100%',
                             width: `${vPct}%`,
-                            background: 'linear-gradient(90deg, var(--color-green-700), var(--color-green-500))',
                             borderRadius: '9999px',
                           }}
                         />

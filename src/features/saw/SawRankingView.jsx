@@ -19,7 +19,7 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
       translateY: [16, 0],
       opacity: [0, 1],
       delay: anime.stagger(60, { start: 100 }),
-      easing: 'easeOutCubic',
+      easing: 'easeOutBack',
       duration: 600,
     })
 
@@ -41,9 +41,9 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
           description="Urutan prioritas penerima berdasarkan nilai preferensi V menurun dengan aturan tie-break deterministik."
         />
         <Panel>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '13.5px' }}>
+          <div className="clay-item" style={{ padding: '32px', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '14px' }}>
             Belum ada hasil kalkulasi SAW. Silakan jalankan kalkulasi pada menu Kalkulasi SAW terlebih dahulu.
-          </p>
+          </div>
         </Panel>
       </div>
     )
@@ -61,19 +61,11 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
         actions={
           <button
             type="button"
-            className="btn-action-glow"
+            className="clay-btn"
             onClick={() => onNavigate('recommendations')}
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
+              padding: '11px 22px',
               fontSize: '13px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              boxShadow: 'var(--shadow-sm)',
             }}
           >
             <span>Lanjut ke Rekomendasi & Kuota</span>
@@ -82,149 +74,136 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
         }
       />
 
-      {/* 3 Quick Summary Mini Cards with Squircles */}
+      {/* 3 Quick Summary Mini Cards with 3D Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '14px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-line)',
-            padding: '14px 18px',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <div>
-            <div style={{ fontSize: '11.5px', fontWeight: '700', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
               Total Alternatif
             </div>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--color-green-950)', marginTop: '2px' }}>
-              {results.length} Calon
+            <div style={{ fontSize: '28px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px', lineHeight: 1.1 }}>
+              {results.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
+              width: '46px',
+              height: '46px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
-            <Users size={20} />
+            <Users size={22} />
           </div>
         </div>
 
         <div
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-success-border)',
-            padding: '14px 18px',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <div>
-            <div style={{ fontSize: '11.5px', fontWeight: '700', color: 'var(--color-success)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-green-700)', textTransform: 'uppercase', letterSpacing: '0.4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span className="pulse-indicator" />
               <span>Masuk Kuota</span>
             </div>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--color-green-700)', marginTop: '2px' }}>
-              {withinQuotaCount} Calon
+            <div style={{ fontSize: '28px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px', lineHeight: 1.1 }}>
+              {withinQuotaCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
+              width: '46px',
+              height: '46px',
+              borderRadius: '16px',
               backgroundColor: '#dcfce7',
               color: '#16a34a',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
-            <Award size={20} />
+            <Award size={22} />
           </div>
         </div>
 
         <div
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-line)',
-            padding: '14px 18px',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <div>
-            <div style={{ fontSize: '11.5px', fontWeight: '700', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
               Cadangan Seleksi
             </div>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--color-text-main)', marginTop: '2px' }}>
-              {reserveCount} Calon
+            <div style={{ fontSize: '28px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-text-main)', marginTop: '4px', lineHeight: 1.1 }}>
+              {reserveCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
+              width: '46px',
+              height: '46px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: '#d97706',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
-            <ShieldAlert size={20} />
+            <ShieldAlert size={22} />
           </div>
         </div>
       </div>
 
       {tieBreakRule && (
         <div
+          className="clay-badge"
           style={{
-            backgroundColor: 'var(--color-surface-muted)',
-            border: '1px solid var(--color-line-dark)',
-            borderRadius: 'var(--radius-md)',
-            padding: '10px 16px',
-            marginBottom: '20px',
+            backgroundColor: '#ffffff',
+            padding: '10px 18px',
+            marginBottom: '24px',
             fontSize: '12.5px',
             color: 'var(--color-text-muted)',
-            display: 'flex',
+            display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
           }}
         >
-          <Trophy size={15} color="var(--color-green-700)" />
+          <Trophy size={16} color="var(--color-green-700)" />
           <span>
-            <strong>Aturan Tie-Break:</strong> {tieBreakRule.description}
+            <strong style={{ color: 'var(--color-green-950)' }}>Aturan Tie-Break:</strong> {tieBreakRule.description}
           </span>
         </div>
       )}
 
       <Panel title={`Daftar Peringkat Resmi (Pagu Kuota: ${quota} Calon)`}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {results.map((row) => {
             const cand = candidates.find((c) => c.id === row.candidateId)
             const res = residents.find((r) => r.id === cand?.residentId)
@@ -244,43 +223,38 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
             return (
               <div
                 key={row.candidateId}
-                className="ranking-page-card ranking-item-card"
+                className="ranking-page-card clay-item"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  padding: '14px 18px',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: isWithinQuota ? '#edf8f3' : 'var(--color-surface)',
-                  border: isWithinQuota ? '2px solid var(--color-success-border)' : '1px solid var(--color-line)',
-                  boxShadow: 'var(--shadow-sm)',
-                  position: 'relative',
-                  overflow: 'hidden',
+                  padding: '16px 20px',
+                  backgroundColor: '#ffffff',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                     <div
+                      className="clay-marble"
                       style={{
-                        width: '38px',
-                        height: '38px',
-                        borderRadius: '50%',
-                        backgroundColor: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-surface-muted)',
-                        color: isWithinQuota ? '#ffffff' : 'var(--color-text-muted)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        width: '40px',
+                        height: '40px',
+                        background: isWithinQuota
+                          ? 'linear-gradient(135deg, #1b8a6a, #16765b)'
+                          : 'linear-gradient(135deg, #94a3b8, #64748b)',
+                        color: '#ffffff',
                         fontWeight: '900',
-                        fontSize: '16px',
-                        fontFamily: 'var(--font-heading)',
-                        boxShadow: isWithinQuota ? '0 2px 8px rgba(22, 118, 91, 0.3)' : 'none',
-                        flexShrink: 0,
+                        fontSize: '15px',
+                        fontFamily: 'monospace',
+                        boxShadow: isWithinQuota
+                          ? '4px 6px 14px rgba(22, 118, 91, 0.35), inset 3px 3px 6px rgba(255, 255, 255, 0.65), inset -3px -3px 6px rgba(0, 0, 0, 0.25)'
+                          : '4px 6px 14px rgba(100, 116, 139, 0.25), inset 3px 3px 6px rgba(255, 255, 255, 0.65), inset -3px -3px 6px rgba(0, 0, 0, 0.25)',
                       }}
                     >
-                      {row.rank}
+                      #{row.rank}
                     </div>
 
                     <div>
-                      <div style={{ fontWeight: '700', fontSize: '15px', color: 'var(--color-green-950)' }}>
+                      <div style={{ fontWeight: '800', fontSize: '15px', color: 'var(--color-green-950)' }}>
                         {res?.name || row.candidateId}
                       </div>
                       <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
@@ -309,7 +283,7 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
                   <div style={{ textAlign: 'right' }}>
                     <div
                       style={{
-                        fontSize: '18px',
+                        fontSize: '17px',
                         fontWeight: '900',
                         fontFamily: 'monospace',
                         color: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-text-main)',
@@ -318,18 +292,13 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
                       V = {formatExact(row.preference.exact, 4)}
                     </div>
                     <span
+                      className="clay-badge"
                       style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
                         marginTop: '4px',
-                        fontSize: '11.5px',
-                        fontWeight: '700',
-                        padding: '3px 8px',
-                        borderRadius: 'var(--radius-sm)',
-                        backgroundColor: isWithinQuota ? 'var(--color-success-bg)' : 'var(--color-warning-bg)',
-                        color: isWithinQuota ? 'var(--color-success)' : 'var(--color-warning)',
-                        border: isWithinQuota ? '1px solid var(--color-success-border)' : '1px solid var(--color-warning-border)',
+                        fontSize: '11px',
+                        padding: '3px 10px',
+                        backgroundColor: isWithinQuota ? '#edf8f3' : '#fef8ee',
+                        color: isWithinQuota ? 'var(--color-green-700)' : 'var(--color-warning)',
                       }}
                     >
                       {isWithinQuota ? (
@@ -344,28 +313,23 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
                   </div>
                 </div>
 
-                {/* Progress Bar representasi V */}
+                {/* Progress Bar 3D Cekung */}
                 <div
+                  className="clay-sunken"
                   style={{
-                    marginTop: '12px',
+                    marginTop: '14px',
                     width: '100%',
-                    height: '5px',
-                    backgroundColor: 'rgba(0, 0, 0, 0.06)',
-                    borderRadius: '999px',
-                    overflow: 'hidden',
+                    height: '10px',
                   }}
                 >
                   <div
-                    className="progress-v-fill-rank"
+                    className="progress-v-fill-rank clay-progress-fill"
                     data-width={`${progressWidthPercent}%`}
                     style={{
-                      height: '100%',
                       width: `${progressWidthPercent}%`,
                       background: isWithinQuota
                         ? 'linear-gradient(90deg, #16765b 0%, #20b47c 65%, #b5f56a 100%)'
                         : 'linear-gradient(90deg, #d97706 0%, #f59e0b 60%, #fde68a 100%)',
-                      borderRadius: '999px',
-                      boxShadow: isWithinQuota ? '0 0 8px rgba(32, 180, 124, 0.35)' : 'none',
                     }}
                   />
                 </div>

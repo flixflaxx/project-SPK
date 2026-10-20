@@ -20,14 +20,15 @@ export function ResidentsView({ residents, onAddResident }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.resident-stat-card'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(80),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [16, 0],
+        delay: anime.stagger(80),
+        duration: 550,
+        easing: 'easeOutBack',
       })
     }
   }, [])
@@ -76,7 +77,7 @@ export function ResidentsView({ residents, onAddResident }) {
       label: 'Nama Warga',
       width: '22%',
       render: (val) => (
-        <span style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>
+        <span style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>
           {val}
         </span>
       ),
@@ -86,7 +87,7 @@ export function ResidentsView({ residents, onAddResident }) {
       label: 'NIK (Masked)',
       width: '18%',
       render: (val) => (
-        <span style={{ fontFamily: 'monospace', fontWeight: '700', color: 'var(--color-green-700)' }}>
+        <span style={{ fontFamily: 'monospace', fontWeight: '800', color: 'var(--color-green-700)' }}>
           {val}
         </span>
       ),
@@ -96,7 +97,9 @@ export function ResidentsView({ residents, onAddResident }) {
       label: 'RT / RW',
       width: '12%',
       render: (val) => (
-        <span style={{ fontWeight: '600', color: 'var(--color-text-main)' }}>{val}</span>
+        <span className="clay-badge" style={{ backgroundColor: '#edf8f3', color: 'var(--color-green-800)', padding: '3px 10px' }}>
+          {val}
+        </span>
       ),
     },
     { key: 'addressStreet', label: 'Alamat Detail', width: '22%' },
@@ -106,13 +109,13 @@ export function ResidentsView({ residents, onAddResident }) {
       width: '14%',
       render: (count) => (
         <span
+          className="clay-badge"
           style={{
-            fontSize: '12px',
+            fontSize: '11.5px',
             color: 'var(--color-green-700)',
             backgroundColor: '#edf8f3',
-            padding: '3px 8px',
-            borderRadius: 'var(--radius-sm)',
-            fontWeight: '600',
+            padding: '4px 10px',
+            fontWeight: '700',
             display: 'inline-flex',
             alignItems: 'center',
             gap: '5px',
@@ -130,11 +133,14 @@ export function ResidentsView({ residents, onAddResident }) {
         <button
           type="button"
           onClick={() => alert(`Detail profil ${row.name} (Simulasi preview)`)}
+          className="clay-badge"
           style={{
-            fontSize: '12px',
+            fontSize: '11.5px',
             color: 'var(--color-green-700)',
+            backgroundColor: '#ffffff',
             fontWeight: '700',
-            textDecoration: 'underline',
+            cursor: 'pointer',
+            padding: '4px 12px',
           }}
         >
           Lihat Profil
@@ -152,18 +158,11 @@ export function ResidentsView({ residents, onAddResident }) {
         actions={
           <button
             type="button"
-            className="btn-action-glow"
+            className="clay-btn"
             onClick={() => setIsModalOpen(true)}
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
+              padding: '11px 22px',
               fontSize: '13px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
             }}
           >
             <Plus size={16} />
@@ -172,47 +171,44 @@ export function ResidentsView({ residents, onAddResident }) {
         }
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="resident-stat-card interactive-card"
+          className="resident-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL WARGA TERDAFTAR</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              TOTAL WARGA TERDAFTAR
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               {residents.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Jiwa</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Basis data master kependudukan
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Users size={22} />
@@ -220,13 +216,10 @@ export function ResidentsView({ residents, onAddResident }) {
         </div>
 
         <div
-          className="resident-stat-card interactive-card"
+          className="resident-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -234,26 +227,26 @@ export function ResidentsView({ residents, onAddResident }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>BERKAS TERALOKASI</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                BERKAS TERALOKASI
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {totalDocuments} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Dokumen</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               KTP, KK, dan surat keterangan RT
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <FileCheck2 size={22} />
@@ -261,37 +254,34 @@ export function ResidentsView({ residents, onAddResident }) {
         </div>
 
         <div
-          className="resident-stat-card interactive-card"
+          className="resident-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>WILAYAH CAKUPAN</div>
-            <div style={{ fontSize: '22px', fontWeight: '800', color: 'var(--color-green-950)', marginTop: '6px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              WILAYAH CAKUPAN
+            </div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               Bulak Amah
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               RT 001 - RT 003 / RW 003
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Home size={22} />
@@ -300,9 +290,9 @@ export function ResidentsView({ residents, onAddResident }) {
       </div>
 
       <Panel>
-        <div style={{ marginBottom: '16px', display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <div style={{ position: 'relative', flex: 1, maxWidth: '420px' }}>
-            <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-subtle)' }} />
+        <div style={{ marginBottom: '20px', display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ position: 'relative', flex: 1, minWidth: '260px', maxWidth: '440px' }}>
+            <Search size={16} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-green-700)' }} />
             <input
               type="text"
               placeholder="Cari berdasarkan nama warga atau RT/RW..."
@@ -310,15 +300,13 @@ export function ResidentsView({ residents, onAddResident }) {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: '100%',
-                padding: '9px 12px 9px 36px',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--color-line-dark)',
+                padding: '11px 16px 11px 42px',
+                borderRadius: '9999px',
                 fontSize: '13px',
-                outline: 'none',
               }}
             />
           </div>
-          <span style={{ fontSize: '12.5px', color: 'var(--color-text-muted)' }}>
+          <span className="clay-badge" style={{ backgroundColor: '#ffffff', color: 'var(--color-text-muted)', fontSize: '12px', padding: '7px 14px' }}>
             Menampilkan {filteredResidents.length} dari {residents.length} warga
           </span>
         </div>
@@ -330,21 +318,23 @@ export function ResidentsView({ residents, onAddResident }) {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Tambah Data Warga Baru">
         {formError && (
           <div
+            className="clay-badge"
             style={{
-              backgroundColor: 'var(--color-danger-bg)',
-              color: 'var(--color-danger)',
-              padding: '10px 12px',
-              borderRadius: 'var(--radius-sm)',
+              backgroundColor: '#fee2e2',
+              color: '#dc2626',
+              padding: '10px 14px',
               fontSize: '12.5px',
-              marginBottom: '14px',
+              marginBottom: '16px',
+              width: '100%',
+              justifyContent: 'center',
             }}
           >
             {formError}
           </div>
         )}
         <form onSubmit={handleCreate}>
-          <div style={{ marginBottom: '12px' }}>
-            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '600', marginBottom: '4px' }}>
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px', color: 'var(--color-green-950)' }}>
               Nama Lengkap Warga
             </label>
             <input
@@ -352,12 +342,12 @@ export function ResidentsView({ residents, onAddResident }) {
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             />
           </div>
 
-          <div style={{ marginBottom: '12px' }}>
-            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '600', marginBottom: '4px' }}>
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px', color: 'var(--color-green-950)' }}>
               NIK (16 Digit Angka)
             </label>
             <input
@@ -367,13 +357,13 @@ export function ResidentsView({ residents, onAddResident }) {
               placeholder="3201012345670001"
               value={formData.nik}
               onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
-              style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px', fontFamily: 'monospace' }}
+              style={{ width: '100%', fontFamily: 'monospace' }}
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '16px' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '600', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px', color: 'var(--color-green-950)' }}>
                 RT / RW
               </label>
               <input
@@ -381,11 +371,11 @@ export function ResidentsView({ residents, onAddResident }) {
                 placeholder="001/003"
                 value={formData.addressRtRw}
                 onChange={(e) => setFormData({ ...formData, addressRtRw: e.target.value })}
-                style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+                style={{ width: '100%' }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '600', marginBottom: '4px' }}>
+              <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px', color: 'var(--color-green-950)' }}>
                 Nomor Telepon / HP
               </label>
               <input
@@ -393,13 +383,13 @@ export function ResidentsView({ residents, onAddResident }) {
                 placeholder="0812-xxxx-xxxx"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+                style={{ width: '100%' }}
               />
             </div>
           </div>
 
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '600', marginBottom: '4px' }}>
+          <div style={{ marginBottom: '22px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '6px', color: 'var(--color-green-950)' }}>
               Alamat Jalan / Tempat Tinggal
             </label>
             <input
@@ -407,22 +397,23 @@ export function ResidentsView({ residents, onAddResident }) {
               placeholder="Jl. Bulak Amah RT 01"
               value={formData.addressStreet}
               onChange={(e) => setFormData({ ...formData, addressStreet: e.target.value })}
-              style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              style={{ padding: '8px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              className="clay-badge"
+              style={{ padding: '9px 18px', backgroundColor: '#ffffff', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px' }}
             >
               Batal
             </button>
             <button
               type="submit"
-              className="btn-action-glow"
-              style={{ padding: '8px 18px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-green-700)', color: '#fff', fontWeight: '700', fontSize: '13px' }}
+              className="clay-btn"
+              style={{ padding: '9px 22px', fontSize: '13px' }}
             >
               Simpan Data Warga
             </button>

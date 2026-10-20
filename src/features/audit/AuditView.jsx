@@ -56,7 +56,7 @@ export function AuditView({ auditLogs }) {
       width: '20%',
       render: (_, row) => (
         <div>
-          <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>{row.actorName}</div>
+          <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>{row.actorName}</div>
           <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Role: {row.role}</div>
         </div>
       ),
@@ -67,14 +67,14 @@ export function AuditView({ auditLogs }) {
       width: '22%',
       render: (val) => (
         <span
+          className="clay-badge"
           style={{
-            fontWeight: '700',
+            fontWeight: '800',
             fontFamily: 'monospace',
-            fontSize: '11.5px',
+            fontSize: '11px',
             backgroundColor: 'var(--color-surface-muted)',
-            padding: '4px 8px',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--color-line)',
+            padding: '4px 10px',
+            color: 'var(--color-green-900)',
           }}
         >
           {val}
@@ -106,21 +106,32 @@ export function AuditView({ auditLogs }) {
         title="Audit Log Aktivitas Pengguna"
         description="Pencatatan riwayat aktivitas pengguna dan perubahan data sistem."
         actions={
-          <div style={{ display: 'flex', gap: '6px', backgroundColor: 'var(--color-surface-muted)', padding: '3px', borderRadius: 'var(--radius-md)' }}>
+          <div
+            className="clay-item"
+            style={{
+              display: 'flex',
+              gap: '6px',
+              padding: '4px',
+              borderRadius: '9999px',
+            }}
+          >
             <button
               type="button"
               onClick={() => setViewMode('timeline')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-                padding: '6px 12px',
-                borderRadius: 'var(--radius-sm)',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '9999px',
                 fontSize: '12px',
-                fontWeight: '700',
-                backgroundColor: viewMode === 'timeline' ? 'var(--color-surface)' : 'transparent',
-                color: viewMode === 'timeline' ? 'var(--color-green-950)' : 'var(--color-text-muted)',
-                boxShadow: viewMode === 'timeline' ? 'var(--shadow-sm)' : 'none',
+                fontWeight: '800',
+                backgroundColor: viewMode === 'timeline' ? 'var(--color-green-700)' : 'transparent',
+                color: viewMode === 'timeline' ? '#ffffff' : 'var(--color-text-muted)',
+                boxShadow: viewMode === 'timeline' ? '0 4px 12px rgba(22, 118, 91, 0.3)' : 'none',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
             >
               <GitCommit size={14} />
@@ -132,14 +143,17 @@ export function AuditView({ auditLogs }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-                padding: '6px 12px',
-                borderRadius: 'var(--radius-sm)',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '9999px',
                 fontSize: '12px',
-                fontWeight: '700',
-                backgroundColor: viewMode === 'table' ? 'var(--color-surface)' : 'transparent',
-                color: viewMode === 'table' ? 'var(--color-green-950)' : 'var(--color-text-muted)',
-                boxShadow: viewMode === 'table' ? 'var(--shadow-sm)' : 'none',
+                fontWeight: '800',
+                backgroundColor: viewMode === 'table' ? 'var(--color-green-700)' : 'transparent',
+                color: viewMode === 'table' ? '#ffffff' : 'var(--color-text-muted)',
+                boxShadow: viewMode === 'table' ? '0 4px 12px rgba(22, 118, 91, 0.3)' : 'none',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
             >
               <List size={14} />
@@ -149,7 +163,7 @@ export function AuditView({ auditLogs }) {
         }
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
@@ -159,20 +173,18 @@ export function AuditView({ auditLogs }) {
         }}
       >
         <div
-          className="audit-stat-card interactive-card"
+          className="audit-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL PERISTIWA AUDIT</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              TOTAL PERISTIWA AUDIT
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
               {auditLogs.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Log</span>
             </div>
@@ -181,10 +193,10 @@ export function AuditView({ auditLogs }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
               display: 'flex',
@@ -197,13 +209,9 @@ export function AuditView({ auditLogs }) {
         </div>
 
         <div
-          className="audit-stat-card interactive-card"
+          className="audit-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -211,7 +219,9 @@ export function AuditView({ auditLogs }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>INTEGRITAS SISTEM</span>
+              <span style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+                INTEGRITAS SISTEM
+              </span>
               <span className="pulse-indicator" />
             </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
@@ -222,10 +232,10 @@ export function AuditView({ auditLogs }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
               display: 'flex',
@@ -238,20 +248,18 @@ export function AuditView({ auditLogs }) {
         </div>
 
         <div
-          className="audit-stat-card interactive-card"
+          className="audit-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>AKTOR BERTUGAS</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              AKTOR BERTUGAS
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
               {distinctActors.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Operator</span>
             </div>
@@ -260,10 +268,10 @@ export function AuditView({ auditLogs }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
               display: 'flex',
@@ -277,8 +285,8 @@ export function AuditView({ auditLogs }) {
       </div>
 
       <Panel title="Jejak Aktivitas & Peristiwa Audit">
-        <div style={{ marginBottom: '18px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12.5px', fontWeight: '700', color: 'var(--color-text-muted)', marginRight: '6px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12.5px', fontWeight: '800', color: 'var(--color-text-muted)', marginRight: '6px' }}>
             <Filter size={14} />
             <span>Filter Aksi:</span>
           </div>
@@ -287,15 +295,15 @@ export function AuditView({ auditLogs }) {
               key={act}
               type="button"
               onClick={() => setFilterAction(act)}
+              className="clay-badge"
               style={{
                 fontSize: '11.5px',
-                fontWeight: '700',
-                padding: '4px 10px',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: filterAction === act ? 'var(--color-green-950)' : 'var(--color-surface-muted)',
+                fontWeight: '800',
+                padding: '5px 12px',
+                backgroundColor: filterAction === act ? 'var(--color-green-950)' : 'var(--color-surface)',
                 color: filterAction === act ? 'var(--color-lime)' : 'var(--color-text-muted)',
-                border: '1px solid var(--color-line-dark)',
                 cursor: 'pointer',
+                border: 'none',
                 transition: 'all 0.15s ease',
               }}
             >
@@ -307,21 +315,23 @@ export function AuditView({ auditLogs }) {
         {viewMode === 'table' ? (
           <DataTable columns={columns} data={filteredLogs} />
         ) : (
-          /* Modern Interactive Vertical Timeline */
-          <div style={{ position: 'relative', paddingLeft: '28px', paddingTop: '8px' }}>
+          /* Modern Interactive Vertical Timeline with Claymorphism */
+          <div style={{ position: 'relative', paddingLeft: '32px', paddingTop: '8px' }}>
             {/* Timeline vertical bar */}
             <div
               style={{
                 position: 'absolute',
-                left: '11px',
-                top: '12px',
-                bottom: '12px',
-                width: '2px',
-                backgroundColor: 'var(--color-line-dark)',
+                left: '12px',
+                top: '16px',
+                bottom: '16px',
+                width: '4px',
+                borderRadius: '4px',
+                background: 'linear-gradient(180deg, var(--color-green-700), #a3e635)',
+                boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.15)',
               }}
             />
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {filteredLogs.map((log) => {
                 const initials = (log.actorName || 'US')
                   .split(' ')
@@ -333,46 +343,40 @@ export function AuditView({ auditLogs }) {
                 return (
                   <div
                     key={log.id}
-                    className="timeline-node-card timeline-item-card"
+                    className="timeline-node-card clay-item"
                     style={{
                       position: 'relative',
-                      backgroundColor: 'var(--color-surface)',
-                      border: '1px solid var(--color-line)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: '14px 18px',
-                      boxShadow: 'var(--shadow-sm)',
+                      padding: '16px 20px',
+                      borderRadius: '20px',
                     }}
                   >
                     {/* Node Dot on vertical line */}
                     <div
                       style={{
                         position: 'absolute',
-                        left: '-23px',
-                        top: '16px',
-                        width: '12px',
-                        height: '12px',
+                        left: '-28px',
+                        top: '22px',
+                        width: '16px',
+                        height: '16px',
                         borderRadius: '50%',
                         backgroundColor: 'var(--color-green-700)',
-                        border: '2px solid #ffffff',
-                        boxShadow: '0 0 0 2px var(--color-green-600)',
+                        border: '3px solid #ffffff',
+                        boxShadow: '0 2px 6px rgba(22, 118, 91, 0.4)',
                       }}
                     />
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         {/* Avatar initials */}
                         <div
+                          className="clay-marble"
                           style={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
-                            backgroundColor: 'var(--color-green-950)',
-                            color: 'var(--color-lime)',
+                            width: '36px',
+                            height: '36px',
+                            fontSize: '12.5px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            fontWeight: '800',
-                            fontSize: '12px',
                             flexShrink: 0,
                           }}
                         >
@@ -380,22 +384,22 @@ export function AuditView({ auditLogs }) {
                         </div>
 
                         <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontWeight: '700', fontSize: '13.5px', color: 'var(--color-green-950)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <span style={{ fontWeight: '800', fontSize: '13.5px', color: 'var(--color-green-950)' }}>
                               {log.actorName}
                             </span>
-                            <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', backgroundColor: 'var(--color-surface-muted)', padding: '2px 6px', borderRadius: '4px' }}>
+                            <span className="clay-badge" style={{ fontSize: '11px', color: 'var(--color-text-muted)', backgroundColor: 'var(--color-surface-muted)', padding: '2px 8px' }}>
                               {log.role}
                             </span>
                             <span
+                              className="clay-badge"
                               style={{
                                 fontSize: '11px',
                                 fontFamily: 'monospace',
-                                fontWeight: '700',
+                                fontWeight: '800',
                                 backgroundColor: '#edf8f3',
                                 color: 'var(--color-green-700)',
-                                padding: '2px 6px',
-                                borderRadius: '4px',
+                                padding: '2px 8px',
                               }}
                             >
                               {log.action}

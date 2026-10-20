@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { CheckCircle2, Download, Printer, FileSpreadsheet, FileText } from 'lucide-react'
 import { PageHeader } from '../../components/common/PageHeader.jsx'
-import { Panel } from '../../components/common/Panel.jsx'
 import { formatExact } from '@shared/domain/saw/fraction.js'
 
 export function ExportsView({
@@ -83,18 +82,18 @@ export function ExportsView({
 
       {downloadSuccess && (
         <div
+          className="clay-badge"
           style={{
-            backgroundColor: 'var(--color-success-bg)',
-            border: '1px solid var(--color-success-border)',
-            color: 'var(--color-success)',
-            padding: '12px 18px',
-            borderRadius: 'var(--radius-md)',
+            backgroundColor: '#edf8f3',
+            color: 'var(--color-green-700)',
+            padding: '14px 20px',
             marginBottom: '20px',
             fontSize: '13.5px',
-            fontWeight: '600',
+            fontWeight: '700',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
+            width: '100%',
           }}
         >
           <CheckCircle2 size={18} />
@@ -103,103 +102,125 @@ export function ExportsView({
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-        <div className="export-card interactive-card">
-          <Panel
-            title="Ekspor Spreadsheet (CSV)"
-            subtitle={`Mengunduh data peringkat lengkap periode ${activePeriod?.name || 'aktif'} dan nilai V.`}
-          >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '16px' }}>
-              <div
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: '#e0f2fe',
-                  color: '#0284c7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <FileSpreadsheet size={22} />
-              </div>
-              <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
-                File memuat data alternatif terverifikasi pada Run <code>{calculationRun?.id || '—'}</code>. Setiap aksi pengunduhan akan dicatat otomatis ke audit log aktivitas.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleExportCsv}
-              disabled={!calculationRun}
-              className={calculationRun ? 'btn-action-glow' : ''}
+        <div className="export-card clay-card" style={{ padding: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
+            <div
+              className="clay-bubble"
               style={{
-                padding: '10px 20px',
-                backgroundColor: 'var(--color-green-700)',
-                color: '#ffffff',
-                borderRadius: 'var(--radius-md)',
-                fontWeight: '700',
-                fontSize: '13.5px',
-                display: 'inline-flex',
+                width: '48px',
+                height: '48px',
+                backgroundColor: '#e0f2fe',
+                color: '#0284c7',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                cursor: calculationRun ? 'pointer' : 'not-allowed',
-                opacity: calculationRun ? 1 : 0.6,
+                justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
-              <Download size={16} />
-              <span>Unduh File CSV (.csv)</span>
-            </button>
-          </Panel>
+              <FileSpreadsheet size={24} />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '17px', fontWeight: '800', color: 'var(--color-green-950)' }}>
+                Ekspor Spreadsheet (CSV)
+              </h3>
+              <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '4px', lineHeight: 1.5 }}>
+                Mengunduh data peringkat lengkap periode <strong>{activePeriod?.name || 'aktif'}</strong> dan nilai preferensi V yang kompatibel dengan Microsoft Excel.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="clay-item"
+            style={{
+              padding: '14px 18px',
+              fontSize: '12.5px',
+              color: 'var(--color-text-muted)',
+              marginBottom: '22px',
+              borderRadius: '16px',
+            }}
+          >
+            File memuat data alternatif terverifikasi pada Run <code>{calculationRun?.id || '—'}</code>. Setiap aksi pengunduhan akan dicatat otomatis ke audit log.
+          </div>
+
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            disabled={!calculationRun}
+            className={calculationRun ? 'clay-btn' : ''}
+            style={{
+              padding: '12px 24px',
+              fontWeight: '700',
+              fontSize: '13.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              cursor: calculationRun ? 'pointer' : 'not-allowed',
+              opacity: calculationRun ? 1 : 0.6,
+              borderRadius: '16px',
+            }}
+          >
+            <Download size={16} />
+            <span>Unduh File CSV (.csv)</span>
+          </button>
         </div>
 
-        <div className="export-card interactive-card">
-          <Panel
-            title="Cetak Lembar Resmi / Simpan PDF"
-            subtitle="Format cetak dokumen resmi dengan kop pemerintah kampung dan disclaimer."
-          >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '16px' }}>
-              <div
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: '#edf8f3',
-                  color: 'var(--color-green-700)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <FileText size={22} />
-              </div>
-              <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
-                Menggunakan tampilan ramah cetak (print stylesheet) yang otomatis merapikan header, tabel bobot, dan peringkat saat jendela cetak browser dibuka.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="btn-action-glow"
+        <div className="export-card clay-card" style={{ padding: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
+            <div
+              className="clay-bubble"
               style={{
-                padding: '10px 20px',
-                backgroundColor: 'var(--color-green-950)',
-                color: 'var(--color-lime)',
-                borderRadius: 'var(--radius-md)',
-                fontWeight: '700',
-                fontSize: '13.5px',
-                display: 'inline-flex',
+                width: '48px',
+                height: '48px',
+                backgroundColor: '#edf8f3',
+                color: 'var(--color-green-700)',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
-              <Printer size={16} />
-              <span>Buka Dialog Cetak Browser</span>
-            </button>
-          </Panel>
+              <FileText size={24} />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '17px', fontWeight: '800', color: 'var(--color-green-950)' }}>
+                Cetak Lembar Resmi / Simpan PDF
+              </h3>
+              <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '4px', lineHeight: 1.5 }}>
+                Format cetak dokumen resmi dengan kop Pemerintah Kampung Bulak Amah, tabel kriteria, bobot, dan disclaimer sistem.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="clay-item"
+            style={{
+              padding: '14px 18px',
+              fontSize: '12.5px',
+              color: 'var(--color-text-muted)',
+              marginBottom: '22px',
+              borderRadius: '16px',
+            }}
+          >
+            Menggunakan tampilan ramah cetak (print stylesheet) yang otomatis merapikan tata letak saat jendela cetak browser dibuka.
+          </div>
+
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="clay-btn"
+            style={{
+              padding: '12px 24px',
+              fontWeight: '700',
+              fontSize: '13.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              borderRadius: '16px',
+            }}
+          >
+            <Printer size={16} />
+            <span>Buka Dialog Cetak Browser</span>
+          </button>
         </div>
       </div>
     </div>

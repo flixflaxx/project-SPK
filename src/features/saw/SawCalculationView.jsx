@@ -23,14 +23,15 @@ export function SawCalculationView({
   const excludedCandidates = candidates.filter((c) => c.verificationStatus !== 'VERIFIED')
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.candidate-calc-item'),
         opacity: [0, 1],
         translateX: [-10, 0],
-        delay: window.anime.stagger(40),
-        duration: 400,
-        easing: 'easeOutCubic',
+        delay: anime.stagger(40),
+        duration: 450,
+        easing: 'easeOutBack',
       })
     }
   }, [candidates])
@@ -81,23 +82,20 @@ export function SawCalculationView({
         description="Eksekusi perhitungan SAW berdasarkan penilaian kriteria terverifikasi."
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -105,26 +103,26 @@ export function SawCalculationView({
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>LOLOS GERBANG VERIFIKASI</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                LOLOS GERBANG VERIFIKASI
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {verifiedCandidates.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Masuk perhitungan ranking
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <CheckCircle2 size={22} />
@@ -132,37 +130,34 @@ export function SawCalculationView({
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>DIKECUALIKAN DARI RUN</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-danger)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              DIKECUALIKAN DARI RUN
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-danger)', marginTop: '6px', lineHeight: 1.1 }}>
               {excludedCandidates.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Pending / berkas belum lengkap
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fee2e2',
               color: 'var(--color-danger)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <AlertTriangle size={22} />
@@ -170,37 +165,34 @@ export function SawCalculationView({
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>ENGINE MATEMATIKA SAW</div>
-            <div style={{ fontSize: '18px', fontWeight: '800', color: 'var(--color-green-950)', marginTop: '8px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              ENGINE MATEMATIKA SAW
+            </div>
+            <div style={{ fontSize: '22px', fontWeight: '800', color: 'var(--color-green-950)', marginTop: '8px', lineHeight: 1.1 }}>
               {calculationRun ? 'Hasil Siap' : 'Belum Dihitung'}
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Simple Additive Weighting
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Cpu size={22} />
@@ -208,26 +200,23 @@ export function SawCalculationView({
         </div>
       </div>
 
-      {/* Execution status & action */}
+      {/* Execution status & action bar in Claymorphism */}
       <div
-        className="interactive-card"
+        className="clay-card"
         style={{
-          backgroundColor: 'var(--color-surface)',
-          padding: '22px 26px',
-          borderRadius: 'var(--radius-lg)',
-          border: '1.5px solid var(--color-green-700)',
-          marginBottom: '24px',
-          boxShadow: 'var(--shadow-sm)',
+          padding: '24px 28px',
+          borderRadius: '26px',
+          marginBottom: '26px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '16px',
+          gap: '18px',
         }}
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '15px', fontWeight: '800', color: 'var(--color-green-950)' }}>
+            <span style={{ fontSize: '15.5px', fontWeight: '800', color: 'var(--color-green-950)' }}>
               Status Run Saat Ini:
             </span>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -246,28 +235,19 @@ export function SawCalculationView({
           type="button"
           disabled={isExecuting}
           onClick={handleExecuteRun}
-          className="btn-calc-glow"
+          className="clay-btn"
           style={{
-            backgroundColor: 'var(--color-green-700)',
-            color: 'var(--color-text-inverse)',
-            padding: '11px 22px',
-            borderRadius: 'var(--radius-md)',
-            fontWeight: '700',
+            padding: '12px 24px',
             fontSize: '14px',
-            fontFamily: 'var(--font-heading)',
-            boxShadow: '0 4px 14px rgba(22, 118, 91, 0.3)',
             cursor: isExecuting ? 'wait' : 'pointer',
             opacity: isExecuting ? 0.7 : 1,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
           }}
         >
           {isExecuting ? (
-            <Loader2 size={17} style={{ animation: 'spin 1s linear infinite' }} />
+            <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
           ) : (
             <span className="calc-icon-spin">
-              <Zap size={17} />
+              <Zap size={18} />
             </span>
           )}
           <span>{calculationRun ? 'Hitung Ulang SAW (Run Baru)' : 'Jalankan Perhitungan SAW'}</span>
@@ -276,14 +256,14 @@ export function SawCalculationView({
 
       {errorMsg && (
         <div
+          className="clay-badge"
           style={{
-            backgroundColor: 'var(--color-danger-bg)',
-            border: '1px solid var(--color-danger-border)',
-            color: 'var(--color-danger)',
-            padding: '14px 18px',
-            borderRadius: 'var(--radius-md)',
-            marginBottom: '20px',
+            backgroundColor: '#fee2e2',
+            color: '#dc2626',
+            padding: '12px 18px',
+            marginBottom: '22px',
             fontSize: '13.5px',
+            width: '100%',
           }}
         >
           <strong>Kalkulasi Gagal:</strong> {errorMsg}
@@ -291,28 +271,27 @@ export function SawCalculationView({
       )}
 
       {/* Snapshot breakdown panels */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px' }}>
         <Panel
           title="Alternatif Lolos Gerbang Kelayakan"
           subtitle={`${verifiedCandidates.length} calon terverifikasi dengan data lengkap akan masuk run.`}
         >
-          <ul style={{ listStyle: 'none' }}>
+          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {verifiedCandidates.map((c) => {
               const res = residents.find((r) => r.id === c.residentId)
               return (
                 <li
                   key={c.id}
-                  className="candidate-calc-item"
+                  className="candidate-calc-item clay-item"
                   style={{
-                    padding: '10px 0',
-                    borderBottom: '1px solid var(--color-line)',
+                    padding: '12px 16px',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     fontSize: '13px',
                   }}
                 >
-                  <span style={{ fontWeight: '600', color: 'var(--color-green-950)' }}>{res?.name || c.id}</span>
+                  <span style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>{res?.name || c.id}</span>
                   <StatusBadge status={c.verificationStatus} />
                 </li>
               )
@@ -324,16 +303,15 @@ export function SawCalculationView({
           title="Alternatif Dikecualikan dari Run"
           subtitle={`${excludedCandidates.length} calon belum berstatus terverifikasi / data belum lengkap.`}
         >
-          <ul style={{ listStyle: 'none' }}>
+          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {excludedCandidates.map((c) => {
               const res = residents.find((r) => r.id === c.residentId)
               return (
                 <li
                   key={c.id}
-                  className="candidate-calc-item"
+                  className="candidate-calc-item clay-item"
                   style={{
-                    padding: '10px 0',
-                    borderBottom: '1px solid var(--color-line)',
+                    padding: '12px 16px',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -341,7 +319,7 @@ export function SawCalculationView({
                   }}
                 >
                   <div>
-                    <div style={{ fontWeight: '600', color: 'var(--color-text-muted)' }}>{res?.name || c.id}</div>
+                    <div style={{ fontWeight: '700', color: 'var(--color-text-muted)' }}>{res?.name || c.id}</div>
                     <div style={{ fontSize: '11px', color: 'var(--color-danger)', marginTop: '2px' }}>{c.verificationNotes}</div>
                   </div>
                   <StatusBadge status={c.verificationStatus} />

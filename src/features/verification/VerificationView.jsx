@@ -27,20 +27,21 @@ export function VerificationView({
   const percentVerified = candidates.length > 0 ? Math.round((verifiedCount / candidates.length) * 100) : 0
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.verif-stat-card'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(80),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [16, 0],
+        delay: anime.stagger(80),
+        duration: 550,
+        easing: 'easeOutBack',
       })
-      window.anime({
+      anime({
         targets: containerRef.current.querySelector('.verif-progress-bar'),
         width: ['0%', `${percentVerified}%`],
-        duration: 850,
-        easing: 'easeOutCubic',
+        duration: 900,
+        easing: 'easeOutQuart',
       })
     }
   }, [candidates, percentVerified])
@@ -81,10 +82,10 @@ export function VerificationView({
         const res = residents.find((r) => r.id === row.residentId)
         return (
           <div>
-            <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>
+            <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>
               {res?.name || row.residentId}
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)' }}>
+            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
               NIK: <code>{res?.nikMasked || '—'}</code> · RT/RW: {res?.addressRtRw || '—'}
             </div>
           </div>
@@ -105,10 +106,21 @@ export function VerificationView({
         const res = residents.find((r) => r.id === row.residentId)
         return (
           <div style={{ fontSize: '12.5px' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: '600', color: 'var(--color-green-700)' }}>
+            <span
+              className="clay-badge"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                fontWeight: '700',
+                color: 'var(--color-green-700)',
+                backgroundColor: '#edf8f3',
+                padding: '4px 10px',
+              }}
+            >
               <FileText size={13} /> {res?.documentCount || 0} Bukti Unggah
             </span>
-            <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)' }}>
+            <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '3px' }}>
               (KTP, KK, Surat RT)
             </div>
           </div>
@@ -123,7 +135,7 @@ export function VerificationView({
         <div>
           <div style={{ fontSize: '12.5px', color: 'var(--color-text-main)' }}>{val || '—'}</div>
           {row.verifiedBy && (
-            <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '3px' }}>
               Petugas: {row.verifiedBy} · {row.verifiedAt ? new Date(row.verifiedAt).toLocaleDateString('id-ID') : ''}
             </div>
           )}
@@ -138,17 +150,11 @@ export function VerificationView({
         <button
           type="button"
           onClick={() => handleOpenModal(row)}
-          className="btn-action-glow"
+          className="clay-btn"
           style={{
-            fontSize: '12px',
-            backgroundColor: 'var(--color-green-700)',
-            color: '#fff',
-            padding: '6px 12px',
-            borderRadius: 'var(--radius-sm)',
-            fontWeight: '700',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '5px',
+            fontSize: '11.5px',
+            padding: '7px 14px',
+            gap: '6px',
           }}
         >
           <Edit3 size={13} />
@@ -166,23 +172,20 @@ export function VerificationView({
         description="Pemeriksaan dokumen dan penetapan kelayakan berkas calon."
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="verif-stat-card interactive-card"
+          className="verif-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -190,26 +193,26 @@ export function VerificationView({
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TERVERIFIKASI SAH</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                TERVERIFIKASI SAH
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {verifiedCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Siap masuk kalkulasi SAW
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <CheckCircle2 size={22} />
@@ -217,37 +220,34 @@ export function VerificationView({
         </div>
 
         <div
-          className="verif-stat-card interactive-card"
+          className="verif-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>MENUNGGU VERIFIKASI</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              MENUNGGU VERIFIKASI
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '6px', lineHeight: 1.1 }}>
               {pendingCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Perlu tinjauan petugas lapangan
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Clock size={22} />
@@ -255,37 +255,34 @@ export function VerificationView({
         </div>
 
         <div
-          className="verif-stat-card interactive-card"
+          className="verif-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>REVISI / GUGUR</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-danger)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              REVISI / GUGUR
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-danger)', marginTop: '6px', lineHeight: 1.1 }}>
               {revisionOrRejectCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Dokumen kurang / tidak layak
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fee2e2',
               color: 'var(--color-danger)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <AlertTriangle size={22} />
@@ -293,68 +290,78 @@ export function VerificationView({
         </div>
       </div>
 
-      {/* Visual Progress Bar Card */}
+      {/* Visual Progress Bar Card in Claymorphism */}
       <div
-        className="interactive-card"
+        className="clay-card"
         style={{
-          backgroundColor: 'var(--color-surface)',
-          padding: '18px 22px',
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--color-line)',
-          boxShadow: 'var(--shadow-sm)',
-          marginBottom: '20px',
+          padding: '20px 26px',
+          borderRadius: '24px',
+          marginBottom: '26px',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <div>
-            <span style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--color-green-950)' }}>
+            <span style={{ fontSize: '14px', fontWeight: '800', color: 'var(--color-green-950)' }}>
               Kelengkapan Verifikasi Administrasi Calon
             </span>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
               {verifiedCount} dari {candidates.length} calon telah terverifikasi lengkap
             </div>
           </div>
-          <span style={{ fontSize: '17px', fontWeight: '800', fontFamily: 'monospace', color: 'var(--color-green-700)' }}>
+          <span
+            className="clay-badge"
+            style={{
+              fontSize: '15px',
+              fontWeight: '800',
+              fontFamily: 'monospace',
+              color: 'var(--color-green-700)',
+              backgroundColor: '#edf8f3',
+              padding: '4px 14px',
+            }}
+          >
             {percentVerified}%
           </span>
         </div>
-        <div style={{ height: '8px', backgroundColor: 'var(--color-surface-muted)', borderRadius: '9999px', overflow: 'hidden' }}>
+        <div className="clay-sunken" style={{ height: '10px', width: '100%' }}>
           <div
-            className="verif-progress-bar"
+            className="verif-progress-bar clay-progress-fill"
             style={{
               height: '100%',
               width: `${percentVerified}%`,
-              background: 'linear-gradient(90deg, var(--color-green-700), var(--color-green-500))',
-              borderRadius: '9999px',
+              background: 'linear-gradient(90deg, #16765b, #20b47c, #b5f56a)',
             }}
           />
         </div>
       </div>
 
       <Panel>
-        {/* Filter bar */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--color-text-muted)' }}>Filter Status:</span>
-          {['ALL', 'PENDING', 'VERIFIED', 'REVISION_REQUIRED', 'REJECTED'].map((st) => (
-            <button
-              key={st}
-              type="button"
-              onClick={() => setFilterStatus(st)}
-              style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                padding: '5px 12px',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: filterStatus === st ? 'var(--color-green-950)' : 'var(--color-surface-muted)',
-                color: filterStatus === st ? 'var(--color-lime)' : 'var(--color-text-muted)',
-                border: '1px solid var(--color-line-dark)',
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              {st}
-            </button>
-          ))}
+        {/* Filter bar with 3D Clay Pills */}
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '12.5px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+            Filter Status:
+          </span>
+          {['ALL', 'PENDING', 'VERIFIED', 'REVISION_REQUIRED', 'REJECTED'].map((st) => {
+            const isActive = filterStatus === st
+            return (
+              <button
+                key={st}
+                type="button"
+                onClick={() => setFilterStatus(st)}
+                className="clay-badge"
+                style={{
+                  fontSize: '12px',
+                  fontWeight: '700',
+                  padding: '6px 14px',
+                  backgroundColor: isActive ? 'var(--color-green-950)' : '#ffffff',
+                  color: isActive ? 'var(--color-lime)' : 'var(--color-text-muted)',
+                  cursor: 'pointer',
+                  transform: isActive ? 'scale(1.04)' : undefined,
+                }}
+              >
+                {st}
+              </button>
+            )
+          })}
         </div>
 
         <DataTable columns={columns} data={filteredCandidates} />
@@ -367,14 +374,14 @@ export function VerificationView({
         title="Pemeriksaan & Verifikasi Dokumen Calon"
       >
         <form onSubmit={handleSave}>
-          <div style={{ marginBottom: '14px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+          <div style={{ marginBottom: '18px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '8px', color: 'var(--color-green-950)' }}>
               Status Verifikasi Kelayakan
             </label>
             <select
               value={newStatus}
               onChange={(e) => setNewStatus(e.target.value)}
-              style={{ width: '100%', padding: '9px 12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             >
               <option value="VERIFIED">TERVERIFIKASI (Lolos Syarat & Siap Masuk SPK)</option>
               <option value="PENDING">PENDING (Menunggu Pemeriksaan Lanjutan)</option>
@@ -383,8 +390,8 @@ export function VerificationView({
             </select>
           </div>
 
-          <div style={{ marginBottom: '18px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '8px', color: 'var(--color-green-950)' }}>
               Catatan Faktual Petugas
             </label>
             <textarea
@@ -393,27 +400,24 @@ export function VerificationView({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Contoh: KTP dan KK sudah dicocokkan dengan data RT. Kondisi fisik rumah dan penghasilan sesuai kriteria..."
-              style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
             <button
               type="button"
               onClick={() => setSelectedCandidate(null)}
-              style={{ padding: '8px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              className="clay-badge"
+              style={{ padding: '9px 18px', backgroundColor: '#ffffff', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px' }}
             >
               Batal
             </button>
             <button
               type="submit"
-              className="btn-action-glow"
+              className="clay-btn"
               style={{
-                padding: '8px 18px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-green-700)',
-                color: '#fff',
-                fontWeight: '700',
+                padding: '9px 22px',
                 fontSize: '13px',
               }}
             >

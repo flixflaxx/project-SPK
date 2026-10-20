@@ -39,20 +39,21 @@ export function AssessmentsView({ candidates, residents, assessments }) {
   const percentComplete = matrixRows.length > 0 ? Math.round((readyCount / matrixRows.length) * 100) : 0
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.ass-stat-card'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(80),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [16, 0],
+        delay: anime.stagger(80),
+        duration: 550,
+        easing: 'easeOutBack',
       })
-      window.anime({
+      anime({
         targets: containerRef.current.querySelector('.ass-progress-bar'),
         width: ['0%', `${percentComplete}%`],
-        duration: 850,
-        easing: 'easeOutCubic',
+        duration: 900,
+        easing: 'easeOutQuart',
       })
     }
   }, [candidates, assessments, percentComplete])
@@ -65,47 +66,44 @@ export function AssessmentsView({ candidates, residents, assessments }) {
         description="Matriks data mentah (X) berdasarkan penilaian kriteria terverifikasi."
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="ass-stat-card interactive-card"
+          className="ass-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL ALTERNATIF MATRIKS</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              TOTAL ALTERNATIF MATRIKS
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               {matrixRows.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Terdaftar dalam siklus periode
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <Users size={22} />
@@ -113,13 +111,10 @@ export function AssessmentsView({ candidates, residents, assessments }) {
         </div>
 
         <div
-          className="ass-stat-card interactive-card"
+          className="ass-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -127,26 +122,26 @@ export function AssessmentsView({ candidates, residents, assessments }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>LENGKAP & SIAP HITUNG</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+                LENGKAP & SIAP HITUNG
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {readyCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Nilai C1–C5 valid & lolos verifikasi
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <CheckCircle2 size={22} />
@@ -154,37 +149,34 @@ export function AssessmentsView({ candidates, residents, assessments }) {
         </div>
 
         <div
-          className="ass-stat-card interactive-card"
+          className="ass-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>BELUM LENGKAP / PENDING</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              BELUM LENGKAP / PENDING
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '6px', lineHeight: 1.1 }}>
               {pendingCount} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Menunggu kelengkapan data
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <ClipboardCheck size={22} />
@@ -192,39 +184,45 @@ export function AssessmentsView({ candidates, residents, assessments }) {
         </div>
       </div>
 
-      {/* Visual Progress Bar Card */}
+      {/* Visual Progress Bar Card with Claymorphism */}
       <div
-        className="interactive-card"
+        className="clay-card"
         style={{
-          backgroundColor: 'var(--color-surface)',
-          padding: '18px 22px',
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--color-line)',
-          boxShadow: 'var(--shadow-sm)',
-          marginBottom: '20px',
+          padding: '22px 26px',
+          borderRadius: '24px',
+          marginBottom: '26px',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
           <div>
-            <span style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--color-green-950)' }}>
+            <span style={{ fontSize: '14.5px', fontWeight: '800', color: 'var(--color-green-950)' }}>
               Kesiapan Matriks Penilaian Calon (X)
             </span>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-muted)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
               {readyCount} dari {matrixRows.length} calon memiliki parameter lengkap untuk dieksekusi mesin SAW
             </div>
           </div>
-          <span style={{ fontSize: '17px', fontWeight: '800', fontFamily: 'monospace', color: 'var(--color-green-700)' }}>
+          <span
+            className="clay-badge"
+            style={{
+              fontSize: '16px',
+              fontWeight: '800',
+              fontFamily: 'monospace',
+              color: 'var(--color-green-700)',
+              backgroundColor: '#edf8f3',
+              padding: '4px 14px',
+            }}
+          >
             {percentComplete}%
           </span>
         </div>
-        <div style={{ height: '8px', backgroundColor: 'var(--color-surface-muted)', borderRadius: '9999px', overflow: 'hidden' }}>
+        <div className="clay-sunken" style={{ height: '11px', width: '100%' }}>
           <div
-            className="ass-progress-bar"
+            className="ass-progress-bar clay-progress-fill"
             style={{
               height: '100%',
               width: `${percentComplete}%`,
-              background: 'linear-gradient(90deg, var(--color-green-700), var(--color-green-500))',
-              borderRadius: '9999px',
+              background: 'linear-gradient(90deg, #16765b, #20b47c, #b5f56a)',
             }}
           />
         </div>
@@ -232,20 +230,20 @@ export function AssessmentsView({ candidates, residents, assessments }) {
 
       <Panel title="Matriks Keputusan Mentah (X) Calon Penerima">
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
             <thead>
-              <tr style={{ backgroundColor: 'var(--color-surface-muted)', borderBottom: '2px solid var(--color-line)' }}>
-                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '700' }}>Alternatif / Calon</th>
-                <th style={{ padding: '12px 14px', textAlign: 'center', fontWeight: '700' }}>Status Verif.</th>
+              <tr>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', borderRadius: '12px 0 0 12px', fontSize: '12px', textTransform: 'uppercase' }}>Alternatif / Calon</th>
+                <th style={{ padding: '12px 16px', textAlign: 'center', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', fontSize: '12px', textTransform: 'uppercase' }}>Status Verif.</th>
                 {criteria.map((c) => (
-                  <th key={c.code} style={{ padding: '12px 14px', textAlign: 'right', fontWeight: '700' }}>
+                  <th key={c.code} style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', fontSize: '12px', textTransform: 'uppercase' }}>
                     <div>{c.code}</div>
                     <div style={{ fontSize: '10.5px', color: 'var(--color-text-muted)', fontWeight: 'normal' }}>
                       {c.type === 'COST' ? 'Cost' : 'Benefit'}
                     </div>
                   </th>
                 ))}
-                <th style={{ padding: '12px 14px', textAlign: 'center', fontWeight: '700' }}>Kelengkapan</th>
+                <th style={{ padding: '12px 16px', textAlign: 'center', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', borderRadius: '0 12px 12px 0', fontSize: '12px', textTransform: 'uppercase' }}>Kelengkapan</th>
               </tr>
             </thead>
             <tbody>
@@ -253,15 +251,15 @@ export function AssessmentsView({ candidates, residents, assessments }) {
                 <tr
                   key={row.candidateId}
                   style={{
-                    borderBottom: '1px solid var(--color-line)',
-                    backgroundColor: idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-hover)',
+                    backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f9fcfb',
+                    transition: 'background-color 0.15s ease',
                   }}
                 >
-                  <td style={{ padding: '12px 14px' }}>
-                    <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>{row.name}</div>
+                  <td style={{ padding: '12px 16px', borderRadius: '10px 0 0 10px', borderBottom: '1px solid rgba(22, 118, 91, 0.05)' }}>
+                    <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>{row.name}</div>
                     <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>NIK: <code>{row.nik}</code></div>
                   </td>
-                  <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                  <td style={{ padding: '12px 16px', textAlign: 'center', borderBottom: '1px solid rgba(22, 118, 91, 0.05)' }}>
                     <StatusBadge status={row.verificationStatus} />
                   </td>
                   {criteria.map((c) => {
@@ -271,31 +269,29 @@ export function AssessmentsView({ candidates, residents, assessments }) {
                       <td
                         key={c.code}
                         style={{
-                          padding: '12px 14px',
+                          padding: '12px 16px',
                           textAlign: 'right',
                           fontFamily: 'monospace',
-                          fontWeight: '700',
+                          fontWeight: '800',
                           color: isMissing ? 'var(--color-danger)' : 'var(--color-text-main)',
-                          backgroundColor: isMissing ? 'var(--color-danger-bg)' : 'transparent',
+                          backgroundColor: isMissing ? '#fee2e2' : 'transparent',
+                          borderBottom: '1px solid rgba(22, 118, 91, 0.05)',
                         }}
                       >
                         {isMissing ? 'KOSONG' : Number(val).toLocaleString('id-ID')}
                       </td>
                     )
                   })}
-                  <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                  <td style={{ padding: '12px 16px', textAlign: 'center', borderRadius: '0 10px 10px 0', borderBottom: '1px solid rgba(22, 118, 91, 0.05)' }}>
                     {row.isComplete && row.verificationStatus === 'VERIFIED' ? (
                       <span
+                        className="clay-badge"
                         style={{
                           color: 'var(--color-success)',
-                          backgroundColor: 'var(--color-success-bg)',
-                          padding: '4px 10px',
-                          borderRadius: 'var(--radius-full)',
-                          fontWeight: '700',
-                          fontSize: '12px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '5px',
+                          backgroundColor: '#edf8f3',
+                          padding: '4px 12px',
+                          fontWeight: '800',
+                          fontSize: '11.5px',
                         }}
                       >
                         <CheckCircle2 size={13} />
@@ -303,16 +299,13 @@ export function AssessmentsView({ candidates, residents, assessments }) {
                       </span>
                     ) : (
                       <span
+                        className="clay-badge"
                         style={{
                           color: 'var(--color-warning)',
-                          backgroundColor: 'var(--color-warning-bg)',
-                          padding: '4px 10px',
-                          borderRadius: 'var(--radius-full)',
-                          fontWeight: '600',
-                          fontSize: '12px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '5px',
+                          backgroundColor: '#fef8ee',
+                          padding: '4px 12px',
+                          fontWeight: '700',
+                          fontSize: '11.5px',
                         }}
                       >
                         <AlertCircle size={13} />

@@ -30,14 +30,15 @@ export function DecisionsView({
   const hasPermission = currentUser?.permissions?.includes(DECISION_PERMISSION) || currentUser?.permissions?.includes('all')
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.decision-card-item'),
         opacity: [0, 1],
-        translateY: [12, 0],
-        delay: window.anime.stagger(50),
-        duration: 450,
-        easing: 'easeOutCubic',
+        translateY: [14, 0],
+        delay: anime.stagger(50),
+        duration: 500,
+        easing: 'easeOutBack',
       })
     }
   }, [calculationRun, decisions])
@@ -96,9 +97,9 @@ export function DecisionsView({
           description="Persetujuan atau penolakan manusia dengan alasan wajib, aktor pencatat, dan jejak keputusan append-only."
         />
         <Panel>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '13.5px' }}>
+          <div className="clay-item" style={{ padding: '32px', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '14px' }}>
             Belum ada hasil kalkulasi SAW untuk periode aktif. Jalankan kalkulasi terlebih dahulu.
-          </p>
+          </div>
         </Panel>
       </div>
     )
@@ -116,47 +117,44 @@ export function DecisionsView({
         description="Lembar penetapan persetujuan resmi penerima bantuan sosial."
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+          gap: '20px',
+          marginBottom: '26px',
         }}
       >
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>ALTERNATIF PERINGKAT</div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              ALTERNATIF PERINGKAT
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '6px', lineHeight: 1.1 }}>
               {calculationRun.results.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Calon</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Siap diverifikasi penetapan
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <UserCheck size={22} />
@@ -164,13 +162,10 @@ export function DecisionsView({
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -178,26 +173,26 @@ export function DecisionsView({
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>RESMI DISETUJUI</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+                RESMI DISETUJUI
+              </span>
               <span className="pulse-indicator" />
             </div>
-            <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
+            <div style={{ fontSize: '30px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '6px', lineHeight: 1.1 }}>
               {approvedCount} / {quota} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>Pagu</span>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               Ketetapan pejabat desa
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <CheckCircle2 size={22} />
@@ -205,37 +200,34 @@ export function DecisionsView({
         </div>
 
         <div
-          className="interactive-card"
+          className="clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '22px 24px',
+            borderRadius: '24px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>OTORISASI AKTIF</div>
-            <div style={{ fontSize: '16px', fontWeight: '800', color: hasPermission ? 'var(--color-green-700)' : 'var(--color-warning)', marginTop: '8px' }}>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
+              OTORISASI AKTIF
+            </div>
+            <div style={{ fontSize: '20px', fontWeight: '800', color: hasPermission ? 'var(--color-green-700)' : 'var(--color-warning)', marginTop: '8px', lineHeight: 1.1 }}>
               {hasPermission ? 'Akses Penuh' : 'Hanya Lihat'}
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
               {currentUser.displayName} ({currentUser.role})
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
+              width: '48px',
+              height: '48px',
+              borderRadius: '16px',
               backgroundColor: hasPermission ? '#edf8f3' : '#fef3c7',
               color: hasPermission ? 'var(--color-green-700)' : 'var(--color-warning)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <FileSignature size={22} />
@@ -245,20 +237,21 @@ export function DecisionsView({
 
       {!hasPermission && (
         <div
+          className="clay-badge"
           style={{
-            backgroundColor: 'var(--color-warning-bg)',
-            border: '1px solid var(--color-warning-border)',
-            color: 'var(--color-warning)',
-            padding: '12px 16px',
-            borderRadius: 'var(--radius-md)',
-            marginBottom: '18px',
+            backgroundColor: '#fef8ee',
+            color: '#b45309',
+            padding: '14px 22px',
+            borderRadius: '20px',
+            marginBottom: '22px',
             fontSize: '13px',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '12px',
+            width: '100%',
           }}
         >
-          <AlertTriangle size={18} style={{ flexShrink: 0 }} />
+          <AlertTriangle size={20} style={{ flexShrink: 0 }} />
           <div>
             <strong>Akses Terbatas:</strong> Peran saat ini ({currentUser.displayName}) hanya memiliki izin baca. Gunakan peran <strong>Penyetuju / Kepala Desa</strong> untuk menetapkan keputusan.
           </div>
@@ -266,34 +259,30 @@ export function DecisionsView({
       )}
 
       <Panel title="Daftar Alternatif & Status Penetapan Resmi">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {calculationRun.results.map((row) => {
             const cand = candidates.find((c) => c.id === row.candidateId)
             const res = residents.find((r) => r.id === cand?.residentId)
             const rec = recommendations.items.find((i) => i.candidateId === row.candidateId)
             const dec = latestDecision(decisions, calculationRun.id, row.candidateId)
-            const isApproved = dec && dec.outcome === 'APPROVED'
 
             return (
               <div
                 key={row.candidateId}
-                className="decision-card-item interactive-card"
+                className="decision-card-item clay-item"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '16px 20px',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: 'var(--color-surface)',
-                  border: isApproved ? '1.5px solid var(--color-green-600)' : '1px solid var(--color-line)',
-                  boxShadow: 'var(--shadow-sm)',
+                  padding: '18px 22px',
+                  backgroundColor: '#ffffff',
                   flexWrap: 'wrap',
-                  gap: '12px',
+                  gap: '14px',
                 }}
               >
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontWeight: '800', fontSize: '15.5px', color: 'var(--color-green-950)' }}>
+                    <span style={{ fontWeight: '800', fontSize: '16px', color: 'var(--color-green-950)' }}>
                       #{row.rank} {res?.name || row.candidateId}
                     </span>
                     <StatusBadge status={rec?.status} customLabel={`Rekomendasi: ${rec?.status}`} />
@@ -302,9 +291,19 @@ export function DecisionsView({
                     NIK: <code>{res?.nikMasked || '—'}</code> · Alamat: {res?.addressRtRw || '—'}
                   </div>
                   {dec && (
-                    <div style={{ marginTop: '8px', fontSize: '12px', color: 'var(--color-green-950)', backgroundColor: 'var(--color-surface-muted)', padding: '8px 12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line)' }}>
-                      <strong>Keputusan Terkini:</strong> <StatusBadge status={dec.outcome} /> — "{dec.reason}"
-                      <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '3px' }}>
+                    <div
+                      className="clay-item"
+                      style={{
+                        marginTop: '10px',
+                        fontSize: '12.5px',
+                        color: 'var(--color-green-950)',
+                        backgroundColor: '#edf8f3',
+                        padding: '10px 14px',
+                        borderRadius: '14px',
+                      }}
+                    >
+                      <strong>Keputusan Terkini:</strong> <StatusBadge status={dec.outcome} /> — &quot;{dec.reason}&quot;
+                      <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '4px' }}>
                         Oleh: {dec.decidedBy} ({new Date(dec.decidedAt).toLocaleString('id-ID')})
                         {dec.isOverride && <span style={{ color: 'var(--color-warning)', fontWeight: 'bold' }}> [DISKRESI / OVERRIDE]</span>}
                       </div>
@@ -312,35 +311,27 @@ export function DecisionsView({
                   )}
                 </div>
 
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <button
                     type="button"
                     disabled={!hasPermission}
                     onClick={() => handleOpenDecisionModal(row.candidateId)}
-                    className={dec && dec.outcome !== 'REVOKED' ? '' : 'btn-action-glow'}
+                    className={dec && dec.outcome !== 'REVOKED' ? 'clay-btn-danger' : 'clay-btn'}
                     style={{
-                      padding: '8px 16px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: dec && dec.outcome !== 'REVOKED' ? '#fff0f6' : 'var(--color-green-700)',
-                      color: dec && dec.outcome !== 'REVOKED' ? '#c2255c' : '#ffffff',
-                      border: dec && dec.outcome !== 'REVOKED' ? '1px solid #fcc2d7' : 'none',
-                      fontSize: '12.5px',
-                      fontWeight: '700',
+                      padding: '9px 18px',
+                      fontSize: '13px',
                       opacity: !hasPermission ? 0.5 : 1,
                       cursor: !hasPermission ? 'not-allowed' : 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
                     }}
                   >
                     {dec && dec.outcome !== 'REVOKED' ? (
                       <>
-                        <RotateCcw size={14} />
+                        <RotateCcw size={15} />
                         <span>Cabut Keputusan</span>
                       </>
                     ) : (
                       <>
-                        <Check size={14} />
+                        <Check size={15} />
                         <span>Tetapkan Keputusan</span>
                       </>
                     )}
@@ -360,27 +351,29 @@ export function DecisionsView({
       >
         {errorMsg && (
           <div
+            className="clay-badge"
             style={{
-              backgroundColor: 'var(--color-danger-bg)',
-              color: 'var(--color-danger)',
-              padding: '10px 12px',
-              borderRadius: 'var(--radius-sm)',
+              backgroundColor: '#fee2e2',
+              color: '#dc2626',
+              padding: '10px 14px',
               fontSize: '12.5px',
-              marginBottom: '14px',
+              marginBottom: '16px',
+              width: '100%',
+              justifyContent: 'center',
             }}
           >
             {errorMsg}
           </div>
         )}
         <form onSubmit={handleSaveDecision}>
-          <div style={{ marginBottom: '14px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+          <div style={{ marginBottom: '18px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '8px', color: 'var(--color-green-950)' }}>
               Jenis Keputusan
             </label>
             <select
               value={outcome}
               onChange={(e) => setOutcome(e.target.value)}
-              style={{ width: '100%', padding: '9px 12px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             >
               <option value="APPROVED">SETUJUI (Penerima Resmi Bansos)</option>
               <option value="REJECTED">TOLAK (Gugur / Tidak Ditetapkan)</option>
@@ -388,8 +381,8 @@ export function DecisionsView({
             </select>
           </div>
 
-          <div style={{ marginBottom: '18px' }}>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px' }}>
+          <div style={{ marginBottom: '22px' }}>
+            <label style={{ display: 'block', fontSize: '12.5px', fontWeight: '700', marginBottom: '8px', color: 'var(--color-green-950)' }}>
               Alasan Penetapan (Wajib Diisi Secara Transparan)
             </label>
             <textarea
@@ -398,27 +391,24 @@ export function DecisionsView({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Contoh: Memenuhi kriteria kemiskinan ekstrem dan lansia tunggal sesuai hasil musyawarah desa..."
-              style={{ width: '100%', padding: '8px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              style={{ width: '100%' }}
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
             <button
               type="button"
               onClick={() => setSelectedCandidateId(null)}
-              style={{ padding: '8px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-line-dark)', fontSize: '13px' }}
+              className="clay-badge"
+              style={{ padding: '9px 18px', backgroundColor: '#ffffff', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px' }}
             >
               Batal
             </button>
             <button
               type="submit"
-              className="btn-action-glow"
+              className="clay-btn"
               style={{
-                padding: '9px 18px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-green-700)',
-                color: '#fff',
-                fontWeight: '700',
+                padding: '9px 22px',
                 fontSize: '13px',
               }}
             >

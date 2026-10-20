@@ -26,7 +26,7 @@ export function LoginView({ onLoginSuccess }) {
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--color-green-950)',
+        backgroundColor: '#09291f',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -44,48 +44,43 @@ export function LoginView({ onLoginSuccess }) {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'radial-gradient(circle at 50% 25%, rgba(32, 180, 124, 0.22), transparent 70%)',
+          background: 'radial-gradient(circle at 50% 25%, rgba(32, 180, 124, 0.28), transparent 70%)',
           pointerEvents: 'none',
         }}
       />
 
       <div
-        className="page-enter-content"
+        className="clay-card page-enter-content"
         style={{
           width: '100%',
-          maxWidth: '440px',
-          backgroundColor: 'var(--color-surface)',
-          borderRadius: 'var(--radius-xl)',
-          boxShadow: 'var(--shadow-modal)',
-          padding: '38px 34px',
+          maxWidth: '460px',
+          borderRadius: '32px',
+          padding: '44px 38px',
           position: 'relative',
           zIndex: 10,
-          border: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div
+            className="clay-bubble"
             style={{
-              width: '56px',
-              height: '56px',
-              borderRadius: '16px',
-              backgroundColor: 'var(--color-green-900)',
+              width: '64px',
+              height: '64px',
+              borderRadius: '20px',
+              backgroundColor: '#0d382e',
               color: 'var(--color-lime)',
               fontFamily: 'var(--font-heading)',
               fontWeight: '900',
-              fontSize: '22px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 16px',
-              boxShadow: '0 8px 20px rgba(9, 41, 31, 0.35)',
+              fontSize: '24px',
+              margin: '0 auto 18px',
+              boxShadow: '4px 8px 18px rgba(9, 41, 31, 0.3), inset 2px 2px 5px rgba(255, 255, 255, 0.2), inset -2px -2px 5px rgba(0, 0, 0, 0.4)',
             }}
           >
             SPK
           </div>
           <h1
             style={{
-              fontSize: '20px',
+              fontSize: '22px',
               fontWeight: '800',
               color: 'var(--color-green-950)',
               lineHeight: 1.25,
@@ -97,7 +92,7 @@ export function LoginView({ onLoginSuccess }) {
             style={{
               fontSize: '13px',
               color: 'var(--color-text-muted)',
-              marginTop: '4px',
+              marginTop: '5px',
             }}
           >
             Kampung Bulak Amah · Metode SAW
@@ -106,14 +101,15 @@ export function LoginView({ onLoginSuccess }) {
 
         {error && (
           <div
+            className="clay-badge"
             style={{
-              backgroundColor: 'var(--color-danger-bg)',
-              border: '1px solid var(--color-danger-border)',
-              color: 'var(--color-danger)',
-              padding: '10px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '13px',
-              marginBottom: '18px',
+              backgroundColor: '#fee2e2',
+              color: '#dc2626',
+              padding: '10px 16px',
+              fontSize: '12.5px',
+              marginBottom: '20px',
+              width: '100%',
+              justifyContent: 'center',
             }}
           >
             {error}
@@ -121,15 +117,17 @@ export function LoginView({ onLoginSuccess }) {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '18px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label
               htmlFor="demo-user"
               style={{
                 display: 'block',
-                fontSize: '13px',
+                fontSize: '12.5px',
                 fontWeight: '700',
                 color: 'var(--color-green-950)',
-                marginBottom: '6px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.4px',
+                marginBottom: '8px',
               }}
             >
               Pilih Akun Pengguna
@@ -140,13 +138,9 @@ export function LoginView({ onLoginSuccess }) {
               onChange={(e) => setSelectedUserEmail(e.target.value)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
-                borderRadius: 'var(--radius-md)',
-                border: '1.5px solid var(--color-line-dark)',
+                padding: '12px 16px',
                 fontSize: '13.5px',
                 fontWeight: '600',
-                backgroundColor: 'var(--color-surface)',
-                outline: 'none',
               }}
             >
               {DEMO_USERS.map((user) => (
@@ -157,15 +151,17 @@ export function LoginView({ onLoginSuccess }) {
             </select>
           </div>
 
-          <div style={{ marginBottom: '24px' }}>
+          <div style={{ marginBottom: '26px' }}>
             <label
               htmlFor="password"
               style={{
                 display: 'block',
-                fontSize: '13px',
+                fontSize: '12.5px',
                 fontWeight: '700',
                 color: 'var(--color-green-950)',
-                marginBottom: '6px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.4px',
+                marginBottom: '8px',
               }}
             >
               Kata Sandi
@@ -177,59 +173,57 @@ export function LoginView({ onLoginSuccess }) {
               onChange={(e) => setPassword(e.target.value)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
-                borderRadius: 'var(--radius-md)',
-                border: '1.5px solid var(--color-line-dark)',
+                padding: '12px 16px',
                 fontSize: '13.5px',
-                outline: 'none',
               }}
               required
             />
-            <span style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '5px', display: 'block' }}>
+            <span style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '6px', display: 'block' }}>
               Mode prototipe: kata sandi bebas (min 6 karakter)
             </span>
           </div>
 
           <button
             type="submit"
-            className="btn-action-glow"
+            className="clay-btn"
             style={{
               width: '100%',
-              backgroundColor: 'var(--color-green-700)',
-              color: 'var(--color-text-inverse)',
-              padding: '12px',
-              borderRadius: 'var(--radius-md)',
+              padding: '14px',
               fontSize: '14.5px',
-              fontWeight: '700',
-              fontFamily: 'var(--font-heading)',
-              boxShadow: 'var(--shadow-sm)',
-              display: 'flex',
-              alignItems: 'center',
+              fontWeight: '800',
               justifyContent: 'center',
-              gap: '8px',
             }}
           >
-            <LogIn size={17} />
+            <LogIn size={18} />
             <span>Masuk ke Aplikasi</span>
           </button>
         </form>
 
         <div
           style={{
-            marginTop: '24px',
-            paddingTop: '16px',
-            borderTop: '1px solid var(--color-line)',
+            marginTop: '28px',
+            paddingTop: '18px',
             fontSize: '11.5px',
             color: 'var(--color-text-subtle)',
             textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px',
+            gap: '8px',
           }}
         >
-          <ShieldCheck size={14} style={{ color: 'var(--color-green-700)' }} />
-          <span>Sistem Pendukung Keputusan Terproteksi © 2026</span>
+          <div
+            className="clay-badge"
+            style={{
+              backgroundColor: '#edf8f3',
+              color: 'var(--color-green-700)',
+              padding: '6px 14px',
+              fontSize: '11.5px',
+            }}
+          >
+            <ShieldCheck size={14} style={{ color: 'var(--color-green-700)' }} />
+            <span>Sistem Pendukung Keputusan Terproteksi © 2026</span>
+          </div>
         </div>
       </div>
     </div>

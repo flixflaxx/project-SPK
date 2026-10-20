@@ -8,14 +8,15 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.anime && containerRef.current) {
-      window.anime({
+    const anime = typeof window !== 'undefined' ? window.anime : null
+    if (anime && containerRef.current) {
+      anime({
         targets: containerRef.current.querySelectorAll('.matrix-row'),
         opacity: [0, 1],
-        translateY: [8, 0],
-        delay: window.anime.stagger(40),
-        duration: 400,
-        easing: 'easeOutCubic',
+        translateY: [10, 0],
+        delay: anime.stagger(40),
+        duration: 450,
+        easing: 'easeOutBack',
       })
     }
   }, [calculationRun])
@@ -29,9 +30,9 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
           description="Matriks R hasil transformasi nilai mentah sesuai tipe kriteria: Benefit (x/max) dan Cost (min/x)."
         />
         <Panel>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '13.5px' }}>
+          <div className="clay-item" style={{ padding: '32px', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '14px' }}>
             Belum ada data perhitungan tersimpan. Silakan jalankan kalkulasi pada menu Perhitungan SAW.
-          </p>
+          </div>
         </Panel>
       </div>
     )
@@ -47,13 +48,13 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
         description="Hasil normalisasi rᵢⱼ berdasarkan atribut Benefit dan Cost kriteria."
       />
 
-      {/* Normalizer statistics banner with Squircle icons */}
+      {/* Normalizer statistics banner with 3D Claymorphism */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '14px',
-          marginBottom: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '16px',
+          marginBottom: '26px',
         }}
       >
         {criteria.map((c) => {
@@ -61,23 +62,20 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
           return (
             <div
               key={c.code}
-              className="interactive-card"
+              className="clay-card"
               style={{
-                backgroundColor: 'var(--color-surface)',
-                border: '1px solid var(--color-line)',
-                borderRadius: 'var(--radius-lg)',
-                padding: '14px 18px',
+                borderRadius: '22px',
+                padding: '18px 22px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                boxShadow: 'var(--shadow-sm)',
               }}
             >
               <div>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>
+                <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.4px' }}>
                   {c.code} · {c.type === 'COST' ? 'Cost (Biaya)' : 'Benefit'}
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: '800', fontFamily: 'monospace', color: 'var(--color-green-950)', marginTop: '4px' }}>
+                <div style={{ fontSize: '20px', fontWeight: '800', fontFamily: 'monospace', color: 'var(--color-green-950)', marginTop: '4px' }}>
                   {isCost ? `Min: ${c.min.value}` : `Max: ${c.max.value}`}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
@@ -86,19 +84,16 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
               </div>
 
               <div
+                className="clay-bubble"
                 style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '12px',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '14px',
                   backgroundColor: isCost ? '#fef3c7' : '#edf8f3',
                   color: isCost ? 'var(--color-warning)' : 'var(--color-green-700)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
                 }}
               >
-                {isCost ? <TrendingDown size={20} /> : <TrendingUp size={20} />}
+                {isCost ? <TrendingDown size={22} /> : <TrendingUp size={22} />}
               </div>
             </div>
           )
@@ -107,12 +102,24 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
 
       <Panel title="Matriks R (Ternormalisasi)">
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
             <thead>
-              <tr style={{ backgroundColor: 'var(--color-surface-muted)', borderBottom: '2px solid var(--color-line)' }}>
-                <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '700' }}>Alternatif / Calon</th>
-                {criteria.map((c) => (
-                  <th key={c.code} style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '700' }}>
+              <tr>
+                <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', borderRadius: '12px 0 0 12px', fontSize: '12px', textTransform: 'uppercase' }}>Alternatif / Calon</th>
+                {criteria.map((c, i) => (
+                  <th
+                    key={c.code}
+                    style={{
+                      padding: '12px 16px',
+                      textAlign: 'right',
+                      fontWeight: '800',
+                      color: 'var(--color-green-950)',
+                      backgroundColor: '#eaf4ef',
+                      fontSize: '12px',
+                      textTransform: 'uppercase',
+                      borderRadius: i === criteria.length - 1 ? '0 12px 12px 0' : undefined,
+                    }}
+                  >
                     <div>r({c.code})</div>
                     <div style={{ fontSize: '10.5px', color: 'var(--color-text-muted)', fontWeight: 'normal' }}>
                       {c.type === 'COST' ? 'min/x' : 'x/max'}
@@ -131,19 +138,19 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
                     key={row.candidateId}
                     className="matrix-row"
                     style={{
-                      borderBottom: '1px solid var(--color-line)',
-                      backgroundColor: idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-hover)',
+                      backgroundColor: idx % 2 === 0 ? '#ffffff' : '#f9fcfb',
+                      transition: 'background-color 0.15s ease',
                     }}
                   >
-                    <td style={{ padding: '12px 16px' }}>
-                      <div style={{ fontWeight: '700', color: 'var(--color-green-950)' }}>
+                    <td style={{ padding: '12px 16px', borderRadius: '10px 0 0 10px', borderBottom: '1px solid rgba(22, 118, 91, 0.05)' }}>
+                      <div style={{ fontWeight: '800', color: 'var(--color-green-950)' }}>
                         {res?.name || row.candidateId}
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
                         NIK: <code>{res?.nikMasked || '—'}</code>
                       </div>
                     </td>
-                    {criteria.map((c) => {
+                    {criteria.map((c, i) => {
                       const norm = row.normalized[c.code]
                       const formatted = formatExact(norm.exact, 4)
                       const decVal = parseFloat(formatted) || 0
@@ -155,32 +162,31 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
                           style={{
                             padding: '12px 16px',
                             textAlign: 'right',
+                            borderRadius: i === criteria.length - 1 ? '0 10px 10px 0' : undefined,
+                            borderBottom: '1px solid rgba(22, 118, 91, 0.05)',
                           }}
                         >
-                          <div style={{ fontFamily: 'monospace', fontWeight: '700', color: 'var(--color-green-700)', fontSize: '13.5px' }}>
+                          <div style={{ fontFamily: 'monospace', fontWeight: '800', color: 'var(--color-green-700)', fontSize: '13.5px' }}>
                             {formatExact(norm.exact, 4)}
                           </div>
-                          {/* Mini visual indicator bar */}
+                          {/* 3D Sunken mini visual bar */}
                           <div
+                            className="clay-sunken"
                             style={{
                               width: '100%',
-                              height: '4px',
-                              backgroundColor: 'var(--color-surface-muted)',
-                              borderRadius: '2px',
-                              marginTop: '4px',
-                              overflow: 'hidden',
+                              height: '5px',
+                              marginTop: '5px',
                             }}
                           >
                             <div
+                              className="clay-progress-fill"
                               style={{
                                 width: `${pct}%`,
-                                height: '100%',
                                 backgroundColor: 'var(--color-green-600)',
-                                borderRadius: '2px',
                               }}
                             />
                           </div>
-                          <div style={{ fontSize: '9.5px', color: 'var(--color-text-subtle)', marginTop: '2px', fontFamily: 'monospace' }}>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-subtle)', marginTop: '2px', fontFamily: 'monospace' }}>
                             [{norm.exact}]
                           </div>
                         </td>

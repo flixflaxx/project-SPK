@@ -16,7 +16,14 @@ export function AppShell({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        backgroundColor: '#eaf4ef',
+      }}
+    >
       <DemoBanner />
       <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
         <SidebarNav
@@ -25,7 +32,15 @@ export function AppShell({
           isOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
         />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 0,
+            backgroundColor: '#eaf4ef',
+          }}
+        >
           <Topbar
             activePeriod={activePeriod}
             currentUser={currentUser}
@@ -44,6 +59,7 @@ export function AppShell({
               maxWidth: '1440px',
               width: '100%',
               margin: '0 auto',
+              backgroundColor: '#eaf4ef',
             }}
           >
             {children}

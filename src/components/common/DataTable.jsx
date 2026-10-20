@@ -1,5 +1,3 @@
-
-
 import { FolderOpen, Loader2 } from 'lucide-react'
 
 export function DataTable({
@@ -12,20 +10,22 @@ export function DataTable({
   if (isLoading) {
     return (
       <div
+        className="clay-item"
         style={{
-          padding: 'var(--space-2xl)',
+          padding: '40px 24px',
           textAlign: 'center',
           color: 'var(--color-text-muted)',
           fontSize: '14px',
+          margin: '12px 0',
         }}
       >
         <Loader2
-          size={24}
+          size={26}
           color="var(--color-green-700)"
           aria-hidden="true"
           style={{ display: 'inline-block', marginBottom: '8px', animation: 'spin 1s linear infinite' }}
         />
-        <p>Memuat data...</p>
+        <p style={{ fontWeight: '600' }}>Memuat data...</p>
       </div>
     )
   }
@@ -33,22 +33,20 @@ export function DataTable({
   if (!data || data.length === 0) {
     return (
       <div
+        className="clay-item"
         style={{
-          padding: 'var(--space-2xl)',
+          padding: '40px 24px',
           textAlign: 'center',
-          backgroundColor: 'var(--color-surface-hover)',
-          borderRadius: 'var(--radius-md)',
-          border: '1px dashed var(--color-line-dark)',
-          margin: 'var(--space-sm) 0',
+          margin: '12px 0',
         }}
       >
         <FolderOpen
-          size={32}
+          size={36}
           color="var(--color-text-subtle)"
           aria-hidden="true"
           style={{ display: 'inline-block', marginBottom: '8px' }}
         />
-        <p style={{ fontWeight: '600', color: 'var(--color-text-main)' }}>Data Kosong</p>
+        <p style={{ fontWeight: '700', color: 'var(--color-green-950)', fontSize: '15px' }}>Data Kosong</p>
         <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '4px' }}>{emptyMessage}</p>
       </div>
     )
@@ -59,27 +57,33 @@ export function DataTable({
       <table
         style={{
           width: '100%',
-          borderCollapse: 'collapse',
+          borderCollapse: 'separate',
+          borderSpacing: '0 4px',
           fontSize: '13.5px',
           textAlign: 'left',
         }}
       >
         <thead>
-          <tr style={{ borderBottom: '2px solid var(--color-line)' }}>
+          <tr>
             {columns.map((col, idx) => (
               <th
                 key={col.key || idx}
                 style={{
                   padding: '12px 14px',
-                  fontWeight: '700',
+                  fontWeight: '800',
                   color: 'var(--color-green-950)',
-                  backgroundColor: 'var(--color-surface-muted)',
+                  backgroundColor: '#eaf4ef',
                   whiteSpace: 'nowrap',
-                  fontSize: '12.5px',
-                  letterSpacing: '0.3px',
+                  fontSize: '12px',
+                  letterSpacing: '0.4px',
                   textTransform: 'uppercase',
                   width: col.width,
                   textAlign: col.align || 'left',
+                  borderTop: 'none',
+                  borderBottom: '2px solid #dce8e0',
+                  borderLeft: 'none',
+                  borderRight: 'none',
+                  borderRadius: idx === 0 ? '12px 0 0 12px' : idx === columns.length - 1 ? '0 12px 12px 0' : undefined,
                 }}
               >
                 {col.label}
@@ -92,16 +96,15 @@ export function DataTable({
             <tr
               key={row[keyField] || rowIdx}
               style={{
-                borderBottom: '1px solid var(--color-line)',
-                backgroundColor: rowIdx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-hover)',
-                transition: 'background-color var(--transition-fast)',
+                backgroundColor: rowIdx % 2 === 0 ? '#ffffff' : '#f9fcfb',
+                transition: 'background-color 0.2s ease, transform 0.15s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#f1f8f5'
+                e.currentTarget.style.backgroundColor = '#edf8f3'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor =
-                  rowIdx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-hover)'
+                  rowIdx % 2 === 0 ? '#ffffff' : '#f9fcfb'
               }}
             >
               {columns.map((col, colIdx) => {
@@ -110,10 +113,17 @@ export function DataTable({
                   <td
                     key={col.key || colIdx}
                     style={{
-                      padding: '12px 14px',
+                      padding: '13px 14px',
                       color: 'var(--color-text-main)',
                       verticalAlign: 'middle',
                       textAlign: col.align || 'left',
+                      borderBottom: '1px solid rgba(22, 118, 91, 0.06)',
+                      borderRadius:
+                        colIdx === 0
+                          ? '12px 0 0 12px'
+                          : colIdx === columns.length - 1
+                            ? '0 12px 12px 0'
+                            : undefined,
                     }}
                   >
                     {col.render ? col.render(value, row, rowIdx) : value ?? '—'}

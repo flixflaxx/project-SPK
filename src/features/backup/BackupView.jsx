@@ -64,10 +64,10 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
       width: '28%',
       render: (val, row) => (
         <div>
-          <div style={{ fontWeight: '700', fontFamily: 'monospace', color: 'var(--color-green-950)' }}>
+          <div style={{ fontWeight: '800', fontFamily: 'monospace', color: 'var(--color-green-950)' }}>
             {val}
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
+          <div style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
             {row.storageKey}
           </div>
         </div>
@@ -82,9 +82,18 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
     {
       key: 'byteSize',
       label: 'Ukuran & Retensi',
-      width: '16%',
+      width: '18%',
       render: (val, row) => (
-        <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--color-green-700)' }}>
+        <span
+          className="clay-badge"
+          style={{
+            fontSize: '11.5px',
+            fontWeight: '800',
+            backgroundColor: '#edf8f3',
+            color: 'var(--color-green-700)',
+            padding: '4px 10px',
+          }}
+        >
           {(val / 1024 / 1024).toFixed(2)} MB · {row.retentionDays} hari
         </span>
       ),
@@ -92,7 +101,7 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
     {
       key: 'checksum',
       label: 'Integritas / Hash SHA-256',
-      width: '20%',
+      width: '18%',
       render: (val) => (
         <span style={{ fontSize: '11px', fontFamily: 'monospace', color: 'var(--color-text-muted)' }}>
           {val ? `${val.slice(0, 18)}...` : '—'}
@@ -104,7 +113,7 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
       label: 'Waktu Selesai',
       width: '18%',
       render: (val) => (
-        <span style={{ fontSize: '12px' }}>
+        <span style={{ fontSize: '12px', fontWeight: '600' }}>
           {new Date(val).toLocaleString('id-ID')}
         </span>
       ),
@@ -122,19 +131,16 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
             type="button"
             disabled={isProcessing}
             onClick={handleCreateBackup}
-            className="btn-action-glow"
+            className="clay-btn"
             style={{
-              backgroundColor: 'var(--color-green-700)',
-              color: '#ffffff',
-              padding: '9px 18px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: '700',
+              padding: '10px 20px',
+              fontWeight: '800',
               fontSize: '13px',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '8px',
               cursor: isProcessing ? 'wait' : 'pointer',
-              opacity: isProcessing ? 0.6 : 1,
+              opacity: isProcessing ? 0.7 : 1,
             }}
           >
             {isProcessing ? (
@@ -147,7 +153,7 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
         }
       />
 
-      {/* Top 3 Squircle Metric Cards */}
+      {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
         style={{
           display: 'grid',
@@ -157,20 +163,18 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
         }}
       >
         <div
-          className="backup-stat-card interactive-card"
+          className="backup-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL SNAPSHOT CADANGAN</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              TOTAL SNAPSHOT CADANGAN
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-950)', marginTop: '4px' }}>
               {backupJobs.length} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>File</span>
             </div>
@@ -179,10 +183,10 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#e0f2fe',
               color: '#0284c7',
               display: 'flex',
@@ -195,13 +199,9 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
         </div>
 
         <div
-          className="backup-stat-card interactive-card"
+          className="backup-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
@@ -209,7 +209,9 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>UJI DRILL PEMULIHAN</span>
+              <span style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+                UJI DRILL PEMULIHAN
+              </span>
               <span className="pulse-indicator" />
             </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-green-700)', marginTop: '4px' }}>
@@ -220,10 +222,10 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#edf8f3',
               color: 'var(--color-green-700)',
               display: 'flex',
@@ -236,20 +238,18 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
         </div>
 
         <div
-          className="backup-stat-card interactive-card"
+          className="backup-stat-card clay-card"
           style={{
-            backgroundColor: 'var(--color-surface)',
-            padding: '16px 20px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-line)',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '18px 22px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
           }}
         >
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-text-muted)' }}>TOTAL STORAGE BACKUP</div>
+            <div style={{ fontSize: '11.5px', fontWeight: '800', color: 'var(--color-text-muted)', letterSpacing: '0.5px' }}>
+              TOTAL STORAGE BACKUP
+            </div>
             <div style={{ fontSize: '26px', fontWeight: '800', fontFamily: 'var(--font-heading)', color: 'var(--color-warning)', marginTop: '4px' }}>
               {totalMb} <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-text-muted)' }}>MB</span>
             </div>
@@ -258,10 +258,10 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
             </div>
           </div>
           <div
+            className="clay-bubble"
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '12px',
               backgroundColor: '#fef3c7',
               color: 'var(--color-warning)',
               display: 'flex',
@@ -276,18 +276,18 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
 
       {successNotice && (
         <div
+          className="clay-badge"
           style={{
-            backgroundColor: 'var(--color-success-bg)',
-            border: '1px solid var(--color-success-border)',
-            color: 'var(--color-success)',
-            padding: '12px 18px',
-            borderRadius: 'var(--radius-md)',
+            backgroundColor: '#edf8f3',
+            color: 'var(--color-green-700)',
+            padding: '14px 20px',
             marginBottom: '20px',
             fontSize: '13.5px',
-            fontWeight: '600',
+            fontWeight: '700',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
+            width: '100%',
           }}
         >
           <CheckCircle2 size={18} />
