@@ -155,9 +155,10 @@ export function BackupView({ backupJobs, onTriggerBackup, onRecordAudit }) {
 
       {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: '16px',
           marginBottom: '20px',
         }}

@@ -68,10 +68,11 @@ export function AssessmentsView({ candidates, residents, assessments }) {
 
       {/* Top 3 Squircle Metric Cards with Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+          gap: '18px',
           marginBottom: '26px',
         }}
       >
@@ -229,8 +230,8 @@ export function AssessmentsView({ candidates, residents, assessments }) {
       </div>
 
       <Panel title="Matriks Keputusan Mentah (X) Calon Penerima">
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
+        <div className="table-responsive-container" style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
             <thead>
               <tr>
                 <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', borderRadius: '12px 0 0 12px', fontSize: '12px', textTransform: 'uppercase' }}>Alternatif / Calon</th>

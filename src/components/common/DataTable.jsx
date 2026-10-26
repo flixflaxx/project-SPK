@@ -53,10 +53,11 @@ export function DataTable({
   }
 
   return (
-    <div style={{ overflowX: 'auto', width: '100%' }}>
+    <div className="table-responsive-container" style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
       <table
         style={{
           width: '100%',
+          minWidth: '580px',
           borderCollapse: 'separate',
           borderSpacing: '0 4px',
           fontSize: '13.5px',

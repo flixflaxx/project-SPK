@@ -70,7 +70,7 @@ export function ReportsView({
       <div
         className="printable-report clay-card"
         style={{
-          padding: '36px 40px',
+          padding: 'clamp(18px, 4vw, 36px)',
           marginBottom: '24px',
         }}
       >
@@ -151,8 +151,8 @@ export function ReportsView({
             </h4>
           </div>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 6px', fontSize: '12.5px' }}>
+          <div className="table-responsive-container" style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '560px', borderCollapse: 'separate', borderSpacing: '0 6px', fontSize: '12.5px' }}>
               <thead>
                 <tr style={{ color: 'var(--color-text-muted)', fontSize: '11px', textTransform: 'uppercase' }}>
                   <th style={{ padding: '8px 14px', textAlign: 'left', fontWeight: '800' }}>Kode</th>
@@ -196,8 +196,8 @@ export function ReportsView({
             </h4>
           </div>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 6px', fontSize: '12.5px' }}>
+          <div className="table-responsive-container" style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '640px', borderCollapse: 'separate', borderSpacing: '0 6px', fontSize: '12.5px' }}>
               <thead>
                 <tr style={{ color: 'var(--color-text-muted)', fontSize: '11px', textTransform: 'uppercase' }}>
                   <th style={{ padding: '10px 14px', textAlign: 'center', width: '8%', fontWeight: '800' }}>Rank</th>

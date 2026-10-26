@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DemoBanner } from '../common/DemoBanner.jsx'
 import { SidebarNav } from './SidebarNav.jsx'
 import { Topbar } from './Topbar.jsx'
@@ -14,6 +14,22 @@ export function AppShell({
   children,
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem('spk_sidebar_collapsed') === 'true'
+    } catch {
+      return false
+    }
+  })
+
+  // Sync isCollapsed ke localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('spk_sidebar_collapsed', String(isCollapsed))
+    } catch {
+      // Ignore in private browsing
+    }
+  }, [isCollapsed])
 
   return (
     <div
@@ -31,6 +47,8 @@ export function AppShell({
           onViewChange={onViewChange}
           isOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
+          isCollapsed={isCollapsed}
+          onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
         />
         <div
           style={{
@@ -48,11 +66,12 @@ export function AppShell({
             onUserChange={onUserChange}
             onSearchClick={() => onViewChange('search')}
             onLogoutClick={onLogoutClick}
-            onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
+            isCollapsed={isCollapsed}
           />
           <main
             key={activeView}
-            className="page-enter-content"
+            className="page-enter-content app-main-content"
             style={{
               flex: 1,
               padding: '24px 32px',

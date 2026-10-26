@@ -26,14 +26,17 @@ import {
 export const NAVIGATION_GROUPS = [
   {
     id: 'workspace',
-    title: 'Workspace',
+    title: 'Dashboard',
+    icon: LayoutDashboard,
+    single: true,
     items: [
-      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, featureNum: 2 },
+      { id: 'dashboard', label: 'Dashboard Utama', icon: LayoutDashboard, featureNum: 2 },
     ],
   },
   {
     id: 'data-verifikasi',
     title: 'Data & Verifikasi',
+    icon: Users,
     items: [
       { id: 'residents', label: 'Data Warga', icon: Users, featureNum: 3 },
       { id: 'candidates', label: 'Calon Penerima', icon: ClipboardList, featureNum: 4 },
@@ -43,6 +46,7 @@ export const NAVIGATION_GROUPS = [
   {
     id: 'konfigurasi-saw',
     title: 'Konfigurasi SAW',
+    icon: Sliders,
     items: [
       { id: 'criteria', label: 'Kriteria', icon: Sliders, featureNum: 6 },
       { id: 'subcriteria', label: 'Subkriteria & Bobot', icon: Scale, featureNum: 7 },
@@ -51,7 +55,8 @@ export const NAVIGATION_GROUPS = [
   },
   {
     id: 'mesin-perhitungan',
-    title: 'Perhitungan',
+    title: 'Perhitungan SAW',
+    icon: Calculator,
     items: [
       { id: 'assessments', label: 'Input Penilaian', icon: FileEdit, featureNum: 9 },
       { id: 'saw-calc', label: 'Kalkulasi SAW', icon: Calculator, featureNum: 10 },
@@ -63,6 +68,7 @@ export const NAVIGATION_GROUPS = [
   {
     id: 'keputusan-laporan',
     title: 'Keputusan & Laporan',
+    icon: FileCheck,
     items: [
       { id: 'recommendations', label: 'Rekomendasi', icon: Lightbulb, featureNum: 14 },
       { id: 'decisions', label: 'Persetujuan', icon: FileCheck, featureNum: 15 },
@@ -75,6 +81,7 @@ export const NAVIGATION_GROUPS = [
   {
     id: 'administrasi',
     title: 'Administrasi',
+    icon: ShieldCheck,
     items: [
       { id: 'users', label: 'Pengguna & Peran', icon: ShieldCheck, featureNum: 20 },
       { id: 'audit', label: 'Log Audit', icon: Activity, featureNum: 21 },

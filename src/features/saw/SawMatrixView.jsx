@@ -50,9 +50,10 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
 
       {/* Normalizer statistics banner with 3D Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
           gap: '16px',
           marginBottom: '26px',
         }}
@@ -101,8 +102,8 @@ export function SawMatrixView({ calculationRun, residents, candidates }) {
       </div>
 
       <Panel title="Matriks R (Ternormalisasi)">
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
+        <div className="table-responsive-container" style={{ overflowX: 'auto', width: '100%', WebkitOverflowScrolling: 'touch' }}>
+          <table style={{ width: '100%', minWidth: '680px', borderCollapse: 'separate', borderSpacing: '0 4px', fontSize: '13px' }}>
             <thead>
               <tr>
                 <th style={{ padding: '12px 16px', textAlign: 'left', fontWeight: '800', color: 'var(--color-green-950)', backgroundColor: '#eaf4ef', borderRadius: '12px 0 0 12px', fontSize: '12px', textTransform: 'uppercase' }}>Alternatif / Calon</th>

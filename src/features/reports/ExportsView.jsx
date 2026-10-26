@@ -101,8 +101,8 @@ export function ExportsView({
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-        <div className="export-card clay-card" style={{ padding: '28px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '20px' }}>
+        <div className="export-card clay-card" style={{ padding: 'clamp(18px, 4vw, 28px)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
             <div
               className="clay-bubble"
@@ -164,7 +164,7 @@ export function ExportsView({
           </button>
         </div>
 
-        <div className="export-card clay-card" style={{ padding: '28px' }}>
+        <div className="export-card clay-card" style={{ padding: 'clamp(18px, 4vw, 28px)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
             <div
               className="clay-bubble"

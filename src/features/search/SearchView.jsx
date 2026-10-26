@@ -156,6 +156,8 @@ export function SearchView({ residents, candidates, auditLogs, onNavigate }) {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
+                        flexWrap: 'wrap',
+                        gap: '10px',
                         fontSize: '13px',
                         borderRadius: '18px',
                       }}
@@ -211,6 +213,8 @@ export function SearchView({ residents, candidates, auditLogs, onNavigate }) {
                           display: 'flex',
                           justifyContent: 'space-between',
                           alignItems: 'center',
+                          flexWrap: 'wrap',
+                          gap: '10px',
                           fontSize: '13px',
                           borderRadius: '18px',
                         }}

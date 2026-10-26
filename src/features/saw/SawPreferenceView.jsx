@@ -73,9 +73,10 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
 
       {/* Top 3 Claymorphism Metric Cards */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: '16px',
           marginBottom: '20px',
         }}
@@ -193,10 +194,11 @@ export function SawPreferenceView({ calculationRun, residents, candidates }) {
       </div>
 
       <Panel title="Tabel Kontribusi Terbobot (w × r) & Akumulasi Nilai V">
-        <div style={{ overflowX: 'auto', padding: '4px' }}>
+        <div className="table-responsive-container" style={{ overflowX: 'auto', padding: '4px', width: '100%', WebkitOverflowScrolling: 'touch' }}>
           <table
             style={{
               width: '100%',
+              minWidth: '720px',
               borderCollapse: 'separate',
               borderSpacing: '0 8px',
               fontSize: '13px',

@@ -225,10 +225,11 @@ export function DashboardView({
 
       {/* 4 Kartu Statistik Atas Bergaya 3D Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-          gap: '22px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+          gap: '20px',
           marginBottom: '32px',
         }}
       >
@@ -286,8 +287,8 @@ export function DashboardView({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
-          gap: '26px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+          gap: '24px',
           marginBottom: '32px',
         }}
       >
@@ -295,7 +296,7 @@ export function DashboardView({
         <div
           className="clay-card clay-anim-card"
           style={{
-            padding: '28px',
+            padding: 'clamp(16px, 3.5vw, 28px)',
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -497,7 +498,7 @@ export function DashboardView({
         <div
           className="clay-card clay-anim-card"
           style={{
-            padding: '28px',
+            padding: 'clamp(16px, 3.5vw, 28px)',
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -654,7 +655,7 @@ export function DashboardView({
       <div
         className="clay-card clay-anim-card"
         style={{
-          padding: '28px',
+          padding: 'clamp(16px, 3.5vw, 28px)',
         }}
       >
         {/* Header */}

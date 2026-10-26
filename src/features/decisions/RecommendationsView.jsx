@@ -68,10 +68,11 @@ export function RecommendationsView({ calculationRun, activePeriod, residents, c
 
       {/* Top Squircle Metric Cards with Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+          gap: '18px',
           marginBottom: '26px',
         }}
       >

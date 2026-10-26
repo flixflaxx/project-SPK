@@ -25,11 +25,13 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = '560px' }) 
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
+      className="modal-overlay"
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(9, 41, 31, 0.45)',
+        backgroundColor: 'rgba(9, 41, 31, 0.52)',
         backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -41,7 +43,7 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = '560px' }) 
       }}
     >
       <div
-        className="clay-card"
+        className="clay-card modal-dialog"
         style={{
           width: '100%',
           maxWidth,
@@ -54,6 +56,7 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = '560px' }) 
         }}
       >
         <div
+          className="modal-header"
           style={{
             padding: '20px 26px',
             display: 'flex',
@@ -79,19 +82,23 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = '560px' }) 
             aria-label="Tutup jendela modal"
             className="clay-bubble"
             style={{
-              width: '32px',
-              height: '32px',
+              width: '34px',
+              height: '34px',
               borderRadius: '50%',
               backgroundColor: '#ffffff',
               color: 'var(--color-text-muted)',
               cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
             <X size={16} />
           </button>
         </div>
 
-        <div style={{ padding: '26px', overflowY: 'auto' }}>{children}</div>
+        <div className="modal-body" style={{ padding: '24px', overflowY: 'auto' }}>{children}</div>
       </div>
     </div>
   )

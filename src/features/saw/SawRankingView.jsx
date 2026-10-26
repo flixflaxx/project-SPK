@@ -76,10 +76,11 @@ export function SawRankingView({ calculationRun, activePeriod, residents, candid
 
       {/* 3 Quick Summary Mini Cards with 3D Claymorphism */}
       <div
+        className="responsive-kpi-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+          gap: '18px',
           marginBottom: '26px',
         }}
       >

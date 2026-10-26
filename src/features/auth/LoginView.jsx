@@ -31,7 +31,7 @@ export function LoginView({ onLoginSuccess }) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '24px',
+        padding: 'clamp(14px, 4vw, 24px)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -55,7 +55,7 @@ export function LoginView({ onLoginSuccess }) {
           width: '100%',
           maxWidth: '460px',
           borderRadius: '32px',
-          padding: '44px 38px',
+          padding: 'clamp(26px, 6vw, 44px) clamp(18px, 5vw, 38px)',
           position: 'relative',
           zIndex: 10,
         }}
